@@ -1,0 +1,75 @@
+---
+import LanguageSwitcher from '@/components/LanguageSwitcher.astro';
+
+export interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const navLabels = {
+  ko: { blog: '블로그', portfolio: '포트폴리오', editor: '에디터', login: '로그인', logout: '로그아웃' },
+  en: { blog: 'Blog', portfolio: 'Portfolio', editor: 'Editor', login: 'Login', logout: 'Logout' },
+  ja: { blog: 'ブログ', portfolio: 'ポートフォリオ', editor: 'エディター', login: 'ログイン', logout: 'ログアウト' },
+};
+const labels = navLabels[lang] || navLabels.ko;
+---
+
+<header style="border-bottom: 1px solid var(--border-color); padding: 1rem 0;">
+  <nav class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+    <a href={`/${lang}`} style="font-size: 1.25rem; font-weight: 700; color: var(--accent);">
+      Blog
+    </a>
+    <div id="nav-links" style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+      <a href={`/${lang}/blog`} class="btn btn-secondary">{labels.blog}</a>
+      <a href={`/${lang}/portfolio`} class="btn btn-secondary">{labels.portfolio}</a>
+      <a href={`/${lang}/blog/editor`} class="btn btn-primary">{labels.editor}</a>
+      <LanguageSwitcher currentLang={lang} />
+    </div>
+  </nav>
+</header>
+
+<script is:inline>
+  const lang = window.location.pathname.split('/')[1] || 'ko';
+  const labels = {
+    ko: { login: '로그인', logout: '로그아웃' },
+    en: { login: 'Login', logout: 'Logout' },
+    ja: { login: 'ログイン', logout: 'ログアウト' },
+  };
+
+  function updateAuthUI() {
+    const token = localStorage.getItem('github_token');
+    const user = localStorage.getItem('github_user');
+    const navDiv = document.getElementById('nav-links');
+    if (!navDiv) return;
+
+    const existing = document.getElementById('auth-btn');
+    if (existing) existing.remove();
+
+    const btn = document.createElement('a');
+    btn.id = 'auth-btn';
+    btn.className = 'btn ' + (token ? 'btn-secondary' : 'btn-primary');
+
+    if (token) {
+      btn.textContent = (user ? '@' + user + ' · ' : '') + (labels[lang]?.logout || labels.en.logout);
+      btn.href = '#';
+      btn.onclick = (e) => {
+        e.preventDefault();
+        localStorage.removeItem('github_token');
+        localStorage.removeItem('github_user');
+        updateAuthUI();
+      };
+    } else {
+      btn.textContent = labels[lang]?.login || labels.en.login;
+      btn.href = '#';
+      btn.onclick = (e) => {
+        e.preventDefault();
+        window.location.href = `/${lang}/admin`;
+      };
+    }
+
+    navDiv.appendChild(btn);
+  }
+
+  document.addEventListener('DOMContentLoaded', updateAuthUI);
+  document.addEventListener('astro:after-swap', updateAuthUI);
+</script>

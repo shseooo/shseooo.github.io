@@ -1,0 +1,39 @@
+---
+export interface Props {
+  currentLang: string;
+}
+
+const { currentLang } = Astro.props;
+const languages = [
+  { code: 'ko', label: '한국어' },
+  { code: 'en', label: 'English' },
+  { code: 'ja', label: '日本語' },
+];
+
+// Get current path without language prefix
+const currentPath = Astro.url.pathname;
+
+// Handle two URL patterns:
+// 1. /blog/{lang}/{slug}/ -> /blog/{newLang}/{slug}/
+// 2. /{lang}/... -> /{newLang}/...
+let langUrl = '';
+const blogPostMatch = currentPath.match(/^\/blog\/(ko|en|ja)\/(.+)$/);
+if (blogPostMatch) {
+  langUrl = `/blog/${blogPostMatch[2]}`;
+} else {
+  langUrl = currentPath.replace(/^\/(ko|en|ja)/, '');
+  if (!langUrl) langUrl = '';
+}
+---
+
+<div id="lang-switcher" style="display: inline-flex; gap: 0.25rem;">
+  {languages.map((lang) => (
+    <a
+      href={`/${lang.code}${langUrl}`}
+      class="btn " + (lang.code === currentLang ? 'btn-primary' : 'btn-secondary')
+      style="padding: 0.25rem 0.5rem; font-size: 0.75rem;"
+    >
+      {lang.label}
+    </a>
+  ))}
+</div>

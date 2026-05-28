@@ -1,0 +1,149 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  return ['ko', 'en', 'ja'].map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang;
+const titles = { ko: '관리자 설정', en: 'Admin Settings', ja: '管理者設定' };
+const descriptions = { ko: 'GitHub 설정을 관리합니다.', en: 'Manage your GitHub settings.', ja: 'GitHub設定を管理します。' };
+---
+
+<BaseLayout title={titles[lang]} lang={lang}>
+  <div class="container mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-6">{titles[lang]}</h1>
+    <p class="text-gray-600 mb-8">{descriptions[lang]}</p>
+
+    <div class="max-w-md space-y-6">
+      <h2 class="text-xl font-semibold">
+        {lang === 'ko' ? 'GitHub OAuth 설정' : lang === 'ja' ? 'GitHub OAuth設定' : 'GitHub OAuth Settings'}
+      </h2>
+      <p class="text-sm text-gray-500">
+        {lang === 'ko' ? 'GitHub Settings > Developer settings > OAuth Apps에서 생성하세요. Authorization callback URL: https://your-site.com/auth/callback'
+          : lang === 'ja' ? 'GitHub設定 > 開発者設定 > OAuth Appsで作成してください。Authorization callback URL: https://your-site.com/auth/callback'
+          : 'Create from GitHub Settings > Developer settings > OAuth Apps. Authorization callback URL: https://your-site.com/auth/callback'}
+      </p>
+
+      <div>
+        <label class="block text-sm font-medium mb-2">Client ID</label>
+        <input type="text" id="clientId" class="w-full p-2 border rounded" placeholder="Ov23li..." />
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-2">Client Secret</label>
+        <input type="password" id="clientSecret" class="w-full p-2 border rounded" placeholder="gh_..." />
+      </div>
+
+      <h2 class="text-xl font-semibold mt-8">
+        {lang === 'ko' ? 'GitHub API 설정' : lang === 'ja' ? 'GitHub API設定' : 'GitHub API Settings'}
+      </h2>
+
+      <div>
+        <label class="block text-sm font-medium mb-2">{lang === 'ko' ? 'GitHub 사용자' : lang === 'ja' ? 'GitHubユーザー' : 'GitHub User'}</label>
+        <input type="text" id="githubUser" class="w-full p-2 border rounded" placeholder="your-username" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-2">{lang === 'ko' ? '저장소 이름' : lang === 'ja' ? 'リポジトリ名' : 'Repository Name'}</label>
+        <input type="text" id="githubRepo" class="w-full p-2 border rounded" placeholder="blog" />
+      </div>
+
+      <button id="saveBtn" class="btn btn-primary">
+        {lang === 'ko' ? '설정 저장' : lang === 'ja' ? '設定を保存' : 'Save Settings'}
+      </button>
+
+      <div id="authSection" class="space-y-4">
+        <div id="loginBtn" class="hidden">
+          <a href="#" id="loginLink" class="btn btn-primary block text-center">
+            {lang === 'ko' ? 'GitHub로 로그인' : lang === 'ja' ? 'GitHubでログイン' : 'Login with GitHub'}
+          </a>
+        </div>
+        <div id="logoutBtn" class="hidden">
+          <p id="userDisplay" class="text-sm text-gray-600 mb-2"></p>
+          <button id="logoutLink" class="btn btn-secondary">
+            {lang === 'ko' ? '로그아웃' : lang === 'ja' ? 'ログアウト' : 'Logout'}
+          </button>
+        </div>
+      </div>
+
+      <div id="message" class="message" style="display: none;"></div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  const lang = window.location.pathname.split('/')[1] || 'ko';
+  const saveBtn = document.getElementById('saveBtn');
+  const message = document.getElementById('message');
+
+  // Load saved values
+  document.getElementById('clientId').value = localStorage.getItem('github_oauth_client_id') || '';
+  document.getElementById('clientSecret').value = localStorage.getItem('github_oauth_client_secret') || '';
+  document.getElementById('githubUser').value = localStorage.getItem('github_user') || '';
+  document.getElementById('githubRepo').value = localStorage.getItem('github_repo') || '';
+
+  function showMessage(text, type = 'success') {
+    message.textContent = text;
+    message.className = 'message ' + type;
+    message.style.display = 'block';
+    message.style.backgroundColor = type === 'success' ? '#d1fae5' : '#fee2e2';
+    message.style.color = type === 'success' ? '#036951' : '#b91c1c';
+    setTimeout(() => { message.style.display = 'none'; }, 3000);
+  }
+
+  function updateAuthUI() {
+    const token = localStorage.getItem('github_token');
+    const user = localStorage.getItem('github_user');
+    const clientId = localStorage.getItem('github_oauth_client_id');
+
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const userDisplay = document.getElementById('userDisplay');
+
+    if (token) {
+      loginBtn.classList.add('hidden');
+      logoutBtn.classList.remove('hidden');
+      userDisplay.textContent = (user ? '@' + user : '') + ' (Authenticated)';
+    } else {
+      loginBtn.classList.toggle('hidden', !clientId);
+      logoutBtn.classList.add('hidden');
+    }
+
+    // Set login link to GitHub OAuth
+    const loginLink = document.getElementById('loginLink');
+    if (clientId) {
+      const redirectUri = window.location.origin + '/auth/callback';
+      const state = encodeURIComponent(window.location.pathname);
+      const scope = 'repo';
+      loginLink.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${state}&scope=${scope}`;
+    }
+  }
+
+  // Logout
+  document.getElementById('logoutLink').addEventListener('click', () => {
+    localStorage.removeItem('github_token');
+    updateAuthUI();
+    showMessage('Logged out', 'success');
+  });
+
+  // Save settings
+  saveBtn.addEventListener('click', () => {
+    const clientId = document.getElementById('clientId').value.trim();
+    const clientSecret = document.getElementById('clientSecret').value.trim();
+    const user = document.getElementById('githubUser').value.trim();
+    const repo = document.getElementById('githubRepo').value.trim();
+
+    if (clientId) localStorage.setItem('github_oauth_client_id', clientId);
+    if (clientSecret) localStorage.setItem('github_oauth_client_secret', clientSecret);
+    if (user) localStorage.setItem('github_user', user);
+    if (repo) localStorage.setItem('github_repo', repo);
+
+    updateAuthUI();
+    showMessage('Saved!', 'success');
+  });
+
+  updateAuthUI();
+</script>
+
+<style>
+  .message { padding: 0.75rem; border-radius: 0.375rem; margin-top: 1rem; }
+</style>

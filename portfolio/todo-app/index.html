@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f5f5f5;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 2rem;
+    }
+    h1 { margin-bottom: 1rem; }
+    .input-group {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    input {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover { background: #4338ca; }
+    ul { list-style: none; }
+    li {
+      padding: 0.75rem;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    li.completed span {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+    .delete-btn {
+      background: #ef4444;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+    }
+    .delete-btn:hover { background: #dc2626; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Todo App ✅</h1>
+    <div class="input-group">
+      <input type="text" id="todoInput" placeholder="Add a new task...">
+      <button onclick="addTodo()">Add</button>
+    </div>
+    <ul id="todoList"></ul>
+  </div>
+
+  <script>
+    let todos = [];
+
+    function renderTodos() {
+      const list = document.getElementById('todoList');
+      list.innerHTML = todos.map((todo, i) => `
+        <li class="${todo.completed ? 'completed' : ''}">
+          <span onclick="toggleTodo(${i})" style="cursor: pointer; flex: 1;">
+            ${todo.completed ? '☑' : '☐'} ${todo.text}
+          </span>
+          <button class="delete-btn" onclick="deleteTodo(${i})">✕</button>
+        </li>
+      `).join('');
+    }
+
+    function addTodo() {
+      const input = document.getElementById('todoInput');
+      const text = input.value.trim();
+      if (text) {
+        todos.push({ text, completed: false });
+        input.value = '';
+        renderTodos();
+      }
+    }
+
+    function toggleTodo(index) {
+      todos[index].completed = !todos[index].completed;
+      renderTodos();
+    }
+
+    function deleteTodo(index) {
+      todos.splice(index, 1);
+      renderTodos();
+    }
+
+    document.getElementById('todoInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') addTodo();
+    });
+
+    renderTodos();
+  </script>
+</body>
+</html>
