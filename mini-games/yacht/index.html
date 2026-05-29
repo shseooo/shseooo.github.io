@@ -1,0 +1,601 @@
+<!DOCTYPE html><html lang="en"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><link rel="sitemap" href="/sitemap-index.xml"><link rel="alternate" type="application/rss+xml" title="Shseooo Blog" href="https://shseooo.github.io/rss.xml"><meta name="generator" content="Astro v6.3.8"><style>@font-face{font-family:Atkinson-c7f4c4e8b285552f;src:url("/_astro/fonts/3e3fc72b1c976ae2.woff") format("woff");font-display:swap;font-weight:400;font-style:normal;}@font-face{font-family:Atkinson-c7f4c4e8b285552f;src:url("/_astro/fonts/8954b997180387d9.woff") format("woff");font-display:swap;font-weight:700;font-style:normal;}@font-face{font-family:"Atkinson-c7f4c4e8b285552f fallback: Arial";src:local("Arial");font-display:swap;font-weight:400;font-style:normal;size-adjust:99.3717%;ascent-override:80.1033%;descent-override:25.2587%;line-gap-override:0%;}@font-face{font-family:"Atkinson-c7f4c4e8b285552f fallback: Arial";src:local("Arial");font-display:swap;font-weight:700;font-style:normal;size-adjust:99.3717%;ascent-override:80.1033%;descent-override:25.2587%;line-gap-override:0%;}:root{--font-atkinson:Atkinson-c7f4c4e8b285552f,"Atkinson-c7f4c4e8b285552f fallback: Arial",sans-serif;}</style><link rel="preload" href="/_astro/fonts/3e3fc72b1c976ae2.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="/_astro/fonts/8954b997180387d9.woff" as="font" type="font/woff" crossorigin><!-- Canonical URL --><link rel="canonical" href="https://shseooo.github.io/mini-games/yacht/"><!-- Primary Meta Tags --><title>Yacht Dice</title><meta name="title" content="Yacht Dice"><meta name="description" content="브라우저에서 즐기는 요트 다이스 미니게임"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://shseooo.github.io/mini-games/yacht/"><meta property="og:title" content="Yacht Dice"><meta property="og:description" content="브라우저에서 즐기는 요트 다이스 미니게임"><meta property="og:image" content="https://shseooo.github.io/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://shseooo.github.io/mini-games/yacht/"><meta property="twitter:title" content="Yacht Dice"><meta property="twitter:description" content="브라우저에서 즐기는 요트 다이스 미니게임"><meta property="twitter:image" content="https://shseooo.github.io/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Honk&family=Rubik+Mono+One&family=Space+Mono:wght@400;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_astro/Header.CKOdelKe.css">
+<link rel="stylesheet" href="/_astro/yacht.D0HqEXI-.css">
+<style>a[data-astro-cid-eimmu3lg]{display:inline-block;text-decoration:none}a[data-astro-cid-eimmu3lg].active{font-weight:bolder;text-decoration:underline}
+</style></head> <body> <header data-astro-cid-3ef6ksr2> <nav data-astro-cid-3ef6ksr2> <h2 data-astro-cid-3ef6ksr2><a href="/" data-astro-cid-3ef6ksr2>Shseooo Blog</a></h2> <button class="nav-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="primary-nav" data-astro-cid-3ef6ksr2> <span class="bar" data-astro-cid-3ef6ksr2></span> <span class="bar" data-astro-cid-3ef6ksr2></span> <span class="bar" data-astro-cid-3ef6ksr2></span> </button> <div class="internal-links" id="primary-nav" data-astro-cid-3ef6ksr2> <a href="/" data-astro-cid-3ef6ksr2="true" data-astro-cid-eimmu3lg> Home </a> <a href="/blog" data-astro-cid-3ef6ksr2="true" data-astro-cid-eimmu3lg> Blog </a> <a href="/tools" data-astro-cid-3ef6ksr2="true" data-astro-cid-eimmu3lg> Tools </a> <a href="/mini-games" class="active" data-astro-cid-3ef6ksr2="true" data-astro-cid-eimmu3lg> Mini-Games </a> </div> </nav> </header>  <script type="module">const e=document.querySelector(".nav-toggle"),a=e?.closest("header");e&&a&&(e.addEventListener("click",()=>{const t=a.classList.toggle("menu-open");e.setAttribute("aria-expanded",String(t)),e.setAttribute("aria-label",t?"메뉴 닫기":"메뉴 열기")}),a.querySelectorAll(".internal-links a").forEach(t=>{t.addEventListener("click",()=>{a.classList.remove("menu-open"),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","메뉴 열기")})}));</script> <div class="game-shell"> <div class="container"> <header class="topbar"> <h1 class="wordmark">YACHT</h1> </header> <!-- Player Setup --> <section class="setup-screen" id="setupScreen" aria-label="Player setup"> <h2>WHO'S PLAYING?</h2> <label class="field-label" for="playerCount">how many?</label> <select id="playerCount" class="visually-hidden" aria-hidden="false"> <option value="1">1 Player</option> <option value="2" selected>2 Players</option> <option value="3">3 Players</option> <option value="4">4 Players</option> </select> <div class="chip-row" role="radiogroup" aria-label="Number of players"> <button type="button" class="player-chip" data-count="1" aria-label="1 player">1<span class="chip-sub">solo</span></button> <button type="button" class="player-chip" data-count="2" aria-label="2 players">2<span class="chip-sub">duo</span></button> <button type="button" class="player-chip" data-count="3" aria-label="3 players">3<span class="chip-sub">trio</span></button> <button type="button" class="player-chip" data-count="4" aria-label="4 players">4<span class="chip-sub">crew</span></button> </div> <label class="field-label">name them</label> <div id="playerNames" class="player-names"></div> <button class="btn-start" id="startBtn">SHAKE THE DICE →</button> </section> <!-- Game --> <section class="game" id="gameArea" aria-label="Game"> <div class="player-banner" id="playerBanner"> <span class="current-name" id="currentName"></span> <span class="round-badge" id="roundBadge"></span> </div> <div class="dice-area" id="diceArea" aria-label="Dice"></div> <div class="controls"> <button id="rollBtn">ROLL</button> <span class="rolls-left" id="rollsLeft">3 rolls left</span> </div> <p class="help-tip">
+tap any die to lock it in · tap a yellow cell to score
+</p> <div class="scorecard"> <div class="scorecard-scroll"> <table> <thead id="scoreHead"></thead> <tbody id="scoreBody"></tbody> </table> </div> </div> </section> </div> <!-- Turn transition --> <div class="turn-banner" id="turnBanner" role="dialog" aria-modal="true" aria-label="Next turn"> <div class="turn-banner-content"> <h2>NEXT · UP</h2> <div class="next-player" id="nextPlayerName"></div> <button id="nextTurnBtn">ROLL IN →</button> </div> </div> <!-- Game Over --> <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Game over"> <div class="confetti" aria-hidden="true"> <span style="left:8%;background:var(--hot);animation-duration:4.2s;animation-delay:0s;"></span> <span style="left:20%;background:var(--sun);animation-duration:4.6s;animation-delay:.3s;width:8px;height:8px;border-radius:50%;"></span> <span style="left:32%;background:var(--sky);animation-duration:3.8s;animation-delay:.6s;"></span> <span style="left:44%;background:var(--mint);animation-duration:4.4s;animation-delay:.2s;"></span> <span style="left:56%;background:var(--hot);animation-duration:4s;animation-delay:.8s;width:8px;height:8px;border-radius:50%;"></span> <span style="left:68%;background:var(--sun);animation-duration:4.3s;animation-delay:.4s;"></span> <span style="left:80%;background:var(--sky);animation-duration:3.9s;animation-delay:.1s;width:8px;height:8px;border-radius:50%;"></span> <span style="left:92%;background:var(--hot);animation-duration:4.1s;animation-delay:.5s;"></span> </div> <div class="overlay-content"> <h2>GAME OVER</h2> <table class="results-table" id="resultsTable"> <thead><tr><th>#</th><th>Player</th><th>Total</th></tr></thead> <tbody id="resultsBody"></tbody> </table> <button id="newGameBtn">PLAY AGAIN ↻</button> </div> </div> </div> <script>
+      /* ── Category definitions with example dice and scoring rules ── */
+      const CATEGORIES = [
+        {
+          id: "ones",
+          name: "Ones",
+          section: "count",
+          example: [1, 3, 1, 5, 1],
+          desc: "sum of 1s",
+        },
+        {
+          id: "twos",
+          name: "Twos",
+          section: "count",
+          example: [2, 4, 2, 6, 3],
+          desc: "sum of 2s",
+        },
+        {
+          id: "threes",
+          name: "Threes",
+          section: "count",
+          example: [3, 1, 3, 5, 2],
+          desc: "sum of 3s",
+        },
+        {
+          id: "fours",
+          name: "Fours",
+          section: "count",
+          example: [4, 2, 4, 6, 3],
+          desc: "sum of 4s",
+        },
+        {
+          id: "fives",
+          name: "Fives",
+          section: "count",
+          example: [5, 2, 5, 4, 1],
+          desc: "sum of 5s",
+        },
+        {
+          id: "sixes",
+          name: "Sixes",
+          section: "count",
+          example: [6, 3, 6, 2, 4],
+          desc: "sum of 6s",
+        },
+        {
+          id: "pair",
+          name: "Pair",
+          section: "combo",
+          example: [4, 4, 1, 5, 2],
+          desc: "sum of pair",
+          highlight: [0, 1],
+        },
+        {
+          id: "two_pair",
+          name: "Two Pair",
+          section: "combo",
+          example: [3, 3, 5, 5, 1],
+          desc: "sum of both pairs",
+          highlight: [0, 1, 2, 3],
+        },
+        {
+          id: "full_house",
+          name: "Full House",
+          section: "combo",
+          example: [3, 3, 5, 5, 5],
+          desc: "sum of all 5",
+          highlight: [0, 1, 2, 3, 4],
+        },
+        {
+          id: "big_straight",
+          name: "Big Straight",
+          section: "combo",
+          example: [2, 3, 4, 5, 6],
+          desc: "30 pts",
+          highlight: [0, 1, 2, 3, 4],
+        },
+        {
+          id: "small_straight",
+          name: "Small Straight",
+          section: "combo",
+          example: [1, 2, 3, 4, 5],
+          desc: "30 pts",
+          highlight: [0, 1, 2, 3, 4],
+        },
+        {
+          id: "yacht",
+          name: "Yacht",
+          section: "combo",
+          example: [4, 4, 4, 4, 4],
+          desc: "50 pts",
+          highlight: [0, 1, 2, 3, 4],
+        },
+        {
+          id: "four_kind",
+          name: "Four of a Kind",
+          section: "combo",
+          example: [2, 2, 2, 2, 6],
+          desc: "sum of 4 dice",
+          highlight: [0, 1, 2, 3],
+        },
+        {
+          id: "choice",
+          name: "Choice",
+          section: "combo",
+          example: [3, 5, 2, 4, 6],
+          desc: "sum of all",
+          highlight: [0, 1, 2, 3, 4],
+        },
+      ];
+
+      // 3x3 dot grid per die face
+      const DICE_FACES = {
+        1: [0, 0, 0, 0, 1, 0, 0, 0, 0],
+        2: [1, 0, 0, 0, 0, 0, 0, 0, 1],
+        3: [1, 0, 0, 0, 1, 0, 0, 0, 1],
+        4: [1, 0, 1, 0, 0, 0, 1, 0, 1],
+        5: [1, 0, 1, 0, 1, 0, 1, 0, 1],
+        6: [1, 0, 1, 1, 0, 1, 1, 0, 1],
+      };
+
+      /* ── Game State ── */
+      let state;
+
+      function createPlayer(name) {
+        return {
+          name,
+          scores: {},
+          available: new Set(CATEGORIES.map((c) => c.id)),
+          dice: [1, 1, 1, 1, 1],
+          held: [false, false, false, false, false],
+          rollsLeft: 3,
+        };
+      }
+
+      function initState(playerNames) {
+        state = {
+          players: playerNames.map((name) => createPlayer(name)),
+          currentPlayer: 0,
+          round: 1,
+          totalRounds: CATEGORIES.length,
+        };
+      }
+
+      /* ── Scoring ── */
+      function calculateScore(catId, dice) {
+        const counts = {};
+        for (let v = 1; v <= 6; v++)
+          counts[v] = dice.filter((d) => d === v).length;
+        const total = dice.reduce((a, b) => a + b, 0);
+
+        switch (catId) {
+          case "ones":
+            return counts[1] * 1;
+          case "twos":
+            return counts[2] * 2;
+          case "threes":
+            return counts[3] * 3;
+          case "fours":
+            return counts[4] * 4;
+          case "fives":
+            return counts[5] * 5;
+          case "sixes":
+            return counts[6] * 6;
+
+          case "pair": {
+            for (let v = 6; v >= 1; v--) if (counts[v] >= 2) return v * 2;
+            return 0;
+          }
+
+          case "two_pair": {
+            const pairs = [];
+            for (let v = 6; v >= 1; v--) {
+              if (counts[v] >= 2) pairs.push(v);
+              if (pairs.length === 2) break;
+            }
+            return pairs.length >= 2 ? pairs[0] * 2 + pairs[1] * 2 : 0;
+          }
+
+          case "full_house": {
+            const vals = Object.values(counts);
+            if (vals.includes(3) && vals.includes(2)) return total;
+            return 0;
+          }
+
+          case "big_straight": {
+            const s = [...dice].sort((a, b) => a - b);
+            return s.join(",") === "2,3,4,5,6" ? 30 : 0;
+          }
+
+          case "small_straight": {
+            const s = [...dice].sort((a, b) => a - b);
+            return s.join(",") === "1,2,3,4,5" ? 30 : 0;
+          }
+
+          case "yacht":
+            return Object.values(counts).includes(5) ? 50 : 0;
+
+          case "four_kind": {
+            for (let v = 6; v >= 1; v--) if (counts[v] >= 4) return v * 4;
+            return 0;
+          }
+
+          case "choice":
+            return total;
+          default:
+            return 0;
+        }
+      }
+
+      /* ── Actions ── */
+      function rollDice() {
+        const p = state.players[state.currentPlayer];
+        for (let i = 0; i < 5; i++) {
+          if (!p.held[i]) p.dice[i] = Math.floor(Math.random() * 6) + 1;
+        }
+        p.rollsLeft--;
+
+        renderAll();
+
+        const SPIN_MS = 650;
+        const FLICKER_MS = 55;
+        const diceEls = document.querySelectorAll(".die");
+        diceEls.forEach((el, i) => {
+          if (!p.held[i]) {
+            el.classList.add("shaking");
+            flickerDie(el, p.dice[i], SPIN_MS, FLICKER_MS);
+          }
+        });
+      }
+
+      function toggleHold(index) {
+        const p = state.players[state.currentPlayer];
+        if (p.rollsLeft === 3) return;
+        p.held[index] = !p.held[index];
+        renderDice();
+      }
+
+      function chooseCategory(catId) {
+        const p = state.players[state.currentPlayer];
+        if (!p.available.has(catId)) return;
+
+        p.scores[catId] = calculateScore(catId, p.dice);
+        p.available.delete(catId);
+
+        advanceTurn();
+        renderAll();
+      }
+
+      function advanceTurn() {
+        const allDone = state.players.every((p) => p.available.size === 0);
+        if (allDone) {
+          showGameOver();
+          return;
+        }
+
+        // Find next player who hasn't finished
+        let next = (state.currentPlayer + 1) % state.players.length;
+        let steps = 0;
+        while (
+          state.players[next].available.size === 0 &&
+          steps < state.players.length
+        ) {
+          next = (next + 1) % state.players.length;
+          steps++;
+        }
+
+        // Check if this is a new round (all players have completed this round)
+        if (next < state.currentPlayer) {
+          state.round++;
+        }
+
+        state.currentPlayer = next;
+
+        // Reset for new turn
+        const p = state.players[next];
+        p.rollsLeft = 3;
+        p.held = [false, false, false, false, false];
+        p.dice = [1, 1, 1, 1, 1];
+
+        // Show turn transition
+        showTurnBanner();
+      }
+
+      function showTurnBanner() {
+        const banner = document.getElementById("turnBanner");
+        document.getElementById("nextPlayerName").textContent =
+          state.players[state.currentPlayer].name;
+        banner.classList.add("show");
+      }
+
+      function showGameOver() {
+        const sorted = state.players
+          .map((p) => ({
+            name: p.name,
+            total: Object.values(p.scores).reduce((a, b) => a + b, 0),
+          }))
+          .sort((a, b) => b.total - a.total);
+
+        const body = document.getElementById("resultsBody");
+        body.innerHTML = "";
+        sorted.forEach((p, i) => {
+          const tr = document.createElement("tr");
+          if (i === 0) tr.className = "winner-row";
+          tr.innerHTML = `
+          <td class="rank">${i === 0 ? "⭐" : i + 1}</td>
+          <td class="player-label">${p.name}</td>
+          <td class="total-label">${p.total}</td>
+        `;
+          body.appendChild(tr);
+        });
+
+        document.getElementById("overlay").classList.add("show");
+      }
+
+      /* ── Rendering ── */
+      function renderDice() {
+        const area = document.getElementById("diceArea");
+        area.innerHTML = "";
+        const p = state.players[state.currentPlayer];
+
+        p.dice.forEach((val, i) => {
+          const wrapper = document.createElement("div");
+          wrapper.className = "die-wrapper";
+
+          const die = document.createElement("div");
+          die.className = "die" + (p.held[i] ? " held" : "");
+          die.addEventListener("click", () => toggleHold(i));
+
+          const dots = DICE_FACES[val] || DICE_FACES[1];
+          dots.forEach((show) => {
+            const dot = document.createElement("div");
+            dot.className = "dot" + (show ? " show" : "");
+            die.appendChild(dot);
+          });
+
+          const label = document.createElement("div");
+          label.className = "die-label";
+          label.textContent = p.held[i] ? "HELD" : "";
+
+          wrapper.appendChild(die);
+          wrapper.appendChild(label);
+          area.appendChild(wrapper);
+        });
+      }
+
+      function renderDieFace(dieEl, val) {
+        const dots = DICE_FACES[val] || DICE_FACES[1];
+        const dotEls = dieEl.children;
+        for (let i = 0; i < 9 && i < dotEls.length; i++) {
+          dotEls[i].className = "dot" + (dots[i] ? " show" : "");
+        }
+      }
+
+      function flickerDie(el, finalVal, durationMs, intervalMs) {
+        const start = performance.now();
+        let lastTick = start;
+        function tick(now) {
+          if (!el.isConnected) return;
+          const elapsed = now - start;
+          if (elapsed >= durationMs) {
+            renderDieFace(el, finalVal);
+            el.classList.remove("shaking");
+            return;
+          }
+          if (now - lastTick >= intervalMs) {
+            lastTick = now;
+            const r = Math.floor(Math.random() * 6) + 1;
+            renderDieFace(el, r);
+          }
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      function createMiniDie(faceValue, highlight) {
+        const div = document.createElement("div");
+        div.className = "mini-die" + (highlight ? " highlight" : "");
+        const dots = DICE_FACES[faceValue] || DICE_FACES[1];
+        dots.forEach((show) => {
+          const d = document.createElement("div");
+          d.className = "mdot" + (show ? " on" : "");
+          div.appendChild(d);
+        });
+        return div;
+      }
+
+      function renderScorecard() {
+        const head = document.getElementById("scoreHead");
+        const body = document.getElementById("scoreBody");
+        head.innerHTML = "";
+        body.innerHTML = "";
+
+        // Header row
+        const headTr = document.createElement("tr");
+        const headTh1 = document.createElement("th");
+        headTh1.textContent = "Category";
+        headTr.appendChild(headTh1);
+        state.players.forEach((p) => {
+          const th = document.createElement("th");
+          th.className = "player-scores-header";
+          th.textContent = p.name;
+          headTr.appendChild(th);
+        });
+        head.appendChild(headTr);
+
+        // Body rows
+        let lastSection = "";
+        const cp = state.players[state.currentPlayer];
+        const isCp = (idx) => idx === state.currentPlayer;
+
+        CATEGORIES.forEach((cat) => {
+          if (cat.section !== lastSection) {
+            const sep = document.createElement("tr");
+            const label = cat.section === "count" ? "Count" : "Combinations";
+            const sepTd = document.createElement("td");
+            sepTd.className = "section-label";
+            sepTd.colSpan = 1 + state.players.length;
+            sepTd.textContent = label;
+            sep.appendChild(sepTd);
+            body.appendChild(sep);
+            lastSection = cat.section;
+          }
+
+          const tr = document.createElement("tr");
+
+          // Category cell with example widget
+          const catCell = document.createElement("td");
+          const catDiv = document.createElement("div");
+          catDiv.className = "cat-cell";
+
+          // Name
+          const nameSpan = document.createElement("span");
+          nameSpan.className = "cat-name";
+          nameSpan.textContent = cat.name;
+          catDiv.appendChild(nameSpan);
+
+          // Example dice widget
+          const exampleDiv = document.createElement("div");
+          exampleDiv.className = "cat-example";
+          const hl = cat.highlight || [];
+          cat.example.forEach((val, idx) => {
+            exampleDiv.appendChild(createMiniDie(val, hl.includes(idx)));
+          });
+          catDiv.appendChild(exampleDiv);
+
+          // Score description
+          const descSpan = document.createElement("span");
+          descSpan.className = "cat-score-desc";
+          descSpan.textContent = cat.desc;
+          catDiv.appendChild(descSpan);
+
+          catCell.appendChild(catDiv);
+          tr.appendChild(catCell);
+
+          // Score cell per player
+          state.players.forEach((p, idx) => {
+            const td = document.createElement("td");
+            const scored = p.scores.hasOwnProperty(cat.id);
+            const isCurrent = isCp(idx);
+            const canChoose =
+              isCurrent && p.available.has(cat.id) && p.rollsLeft < 3;
+
+            if (scored) {
+              td.className = "score-col scored";
+              if (p.scores[cat.id] === 0) td.classList.add("zero");
+              td.textContent = p.scores[cat.id];
+            } else if (canChoose) {
+              td.className = "score-col can-choose";
+              td.textContent = calculateScore(cat.id, p.dice);
+              td.title = "Click to score";
+              const catId = cat.id;
+              td.addEventListener("click", () => chooseCategory(catId));
+            } else {
+              td.className = "score-col";
+              td.style.color = "#444";
+              td.textContent = "—";
+            }
+
+            tr.appendChild(td);
+          });
+
+          body.appendChild(tr);
+        });
+
+        // Total row
+        const totalTr = document.createElement("tr");
+        const totalName = document.createElement("td");
+        totalName.textContent = "Total";
+        totalTr.appendChild(totalName);
+        state.players.forEach((p) => {
+          const td = document.createElement("td");
+          td.className = "score-col";
+          td.style.fontWeight = "700";
+          td.style.color = "#e94560";
+          td.style.textAlign = "center";
+          td.textContent = Object.keys(p.scores).length
+            ? Object.values(p.scores).reduce((a, b) => a + b, 0)
+            : "—";
+          totalTr.appendChild(td);
+        });
+        body.appendChild(totalTr);
+      }
+
+      function renderAll() {
+        renderDice();
+        renderScorecard();
+
+        const cp = state.players[state.currentPlayer];
+        document.getElementById("currentName").textContent =
+          state.players[state.currentPlayer].name;
+        document.getElementById("roundBadge").textContent =
+          `Round ${state.round} / ${state.totalRounds}`;
+
+        const rollBtn = document.getElementById("rollBtn");
+        rollBtn.disabled = cp.rollsLeft <= 0;
+
+        document.getElementById("rollsLeft").textContent =
+          cp.rollsLeft > 0
+            ? cp.rollsLeft + " roll" + (cp.rollsLeft !== 1 ? "s" : "") + " left"
+            : "Choose a category";
+      }
+
+      /* ── Setup Screen ── */
+      function updatePlayerInputs() {
+        const count = parseInt(document.getElementById("playerCount").value);
+        const container = document.getElementById("playerNames");
+        container.innerHTML = "";
+        for (let i = 0; i < count; i++) {
+          const input = document.createElement("input");
+          input.type = "text";
+          input.placeholder = `Player ${i + 1}`;
+          input.value = `Player ${i + 1}`;
+          input.className = "pname";
+          container.appendChild(input);
+        }
+      }
+
+      document
+        .getElementById("playerCount")
+        .addEventListener("change", updatePlayerInputs);
+
+      document.getElementById("startBtn").addEventListener("click", () => {
+        const inputs = document.querySelectorAll(".pname");
+        const names = Array.from(inputs).map(
+          (inp) => inp.value.trim() || inp.placeholder,
+        );
+        initState(names);
+
+        document.getElementById("setupScreen").style.display = "none";
+        document.getElementById("gameArea").classList.add("active");
+        renderAll();
+      });
+
+      document.getElementById("rollBtn").addEventListener("click", () => {
+        const p = state.players[state.currentPlayer];
+        if (p.rollsLeft > 0) rollDice();
+      });
+
+      document.getElementById("nextTurnBtn").addEventListener("click", () => {
+        document.getElementById("turnBanner").classList.remove("show");
+        renderAll();
+      });
+
+      document.getElementById("newGameBtn").addEventListener("click", () => {
+        document.getElementById("overlay").classList.remove("show");
+        document.getElementById("gameArea").classList.remove("active");
+        document.getElementById("setupScreen").style.display = "block";
+        state = null;
+      });
+
+      /* ── Init ── */
+      updatePlayerInputs();
+    </script> <script>
+      /* ── UI layer: chip-based player-count selector ── */
+      (() => {
+        const chips = document.querySelectorAll(".player-chip");
+        const sel = document.getElementById("playerCount");
+
+        function syncChips() {
+          chips.forEach((c) =>
+            c.classList.toggle("active", c.dataset.count === sel.value),
+          );
+        }
+
+        chips.forEach((chip) => {
+          chip.addEventListener("click", () => {
+            sel.value = chip.dataset.count;
+            sel.dispatchEvent(new Event("change"));
+            syncChips();
+          });
+        });
+
+        syncChips();
+      })();
+    </script> </body> </html>

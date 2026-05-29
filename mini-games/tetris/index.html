@@ -1,0 +1,1768 @@
+<!DOCTYPE html><html lang="ko"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><link rel="sitemap" href="/sitemap-index.xml"><link rel="alternate" type="application/rss+xml" title="Shseooo Blog" href="https://shseooo.github.io/rss.xml"><meta name="generator" content="Astro v6.3.8"><style>@font-face{font-family:Atkinson-c7f4c4e8b285552f;src:url("/_astro/fonts/3e3fc72b1c976ae2.woff") format("woff");font-display:swap;font-weight:400;font-style:normal;}@font-face{font-family:Atkinson-c7f4c4e8b285552f;src:url("/_astro/fonts/8954b997180387d9.woff") format("woff");font-display:swap;font-weight:700;font-style:normal;}@font-face{font-family:"Atkinson-c7f4c4e8b285552f fallback: Arial";src:local("Arial");font-display:swap;font-weight:400;font-style:normal;size-adjust:99.3717%;ascent-override:80.1033%;descent-override:25.2587%;line-gap-override:0%;}@font-face{font-family:"Atkinson-c7f4c4e8b285552f fallback: Arial";src:local("Arial");font-display:swap;font-weight:700;font-style:normal;size-adjust:99.3717%;ascent-override:80.1033%;descent-override:25.2587%;line-gap-override:0%;}:root{--font-atkinson:Atkinson-c7f4c4e8b285552f,"Atkinson-c7f4c4e8b285552f fallback: Arial",sans-serif;}</style><link rel="preload" href="/_astro/fonts/3e3fc72b1c976ae2.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="/_astro/fonts/8954b997180387d9.woff" as="font" type="font/woff" crossorigin><!-- Canonical URL --><link rel="canonical" href="https://shseooo.github.io/mini-games/tetris/"><!-- Primary Meta Tags --><title>테트리스</title><meta name="title" content="테트리스"><meta name="description" content="브라우저에서 즐기는 테트리스 미니게임"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://shseooo.github.io/mini-games/tetris/"><meta property="og:title" content="테트리스"><meta property="og:description" content="브라우저에서 즐기는 테트리스 미니게임"><meta property="og:image" content="https://shseooo.github.io/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://shseooo.github.io/mini-games/tetris/"><meta property="twitter:title" content="테트리스"><meta property="twitter:description" content="브라우저에서 즐기는 테트리스 미니게임"><meta property="twitter:image" content="https://shseooo.github.io/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&family=Archivo+Narrow:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_astro/Header.CKOdelKe.css">
+<link rel="stylesheet" href="/_astro/tetris.DHyXX1VS.css">
+<style>a[data-astro-cid-eimmu3lg]{display:inline-block;text-decoration:none}a[data-astro-cid-eimmu3lg].active{font-weight:bolder;text-decoration:underline}
+</style></head> <body> <header data-astro-cid-3ef6ksr2> <nav data-astro-cid-3ef6ksr2> <h2 data-astro-cid-3ef6ksr2><a href="/" data-astro-cid-3ef6ksr2>Shseooo Blog</a></h2> <button class="nav-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="primary-nav" data-astro-cid-3ef6ksr2> <span class="bar" data-astro-cid-3ef6ksr2></span> <span class="bar" data-astro-cid-3ef6ksr2></span> <span class="bar" data-astro-cid-3ef6ksr2></span> </button> <div class="internal-links" id="primary-nav" data-astro-cid-3ef6ksr2> <a href="/" data-astro-cid-3ef6ksr2="true" data-astro-cid-eimmu3lg> Home </a> <a href="/blog" data-astro-cid-3ef6ksr2="true" data-astro-cid-eimmu3lg> Blog </a> <a href="/tools" data-astro-cid-3ef6ksr2="true" data-astro-cid-eimmu3lg> Tools </a> <a href="/mini-games" class="active" data-astro-cid-3ef6ksr2="true" data-astro-cid-eimmu3lg> Mini-Games </a> </div> </nav> </header>  <script type="module">const e=document.querySelector(".nav-toggle"),a=e?.closest("header");e&&a&&(e.addEventListener("click",()=>{const t=a.classList.toggle("menu-open");e.setAttribute("aria-expanded",String(t)),e.setAttribute("aria-label",t?"메뉴 닫기":"메뉴 열기")}),a.querySelectorAll(".internal-links a").forEach(t=>{t.addEventListener("click",()=>{a.classList.remove("menu-open"),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","메뉴 열기")})}));</script> <div class="game-shell"> <!-- constructivist decorative furniture --> <div class="poster-deco" aria-hidden="true"> <div class="deco-ring"></div> <div class="deco-ring small"></div> <div class="deco-bar"></div> <div class="deco-bar thin"></div> <div class="deco-stripes"></div> <div class="deco-star s1">★</div> <div class="deco-star s2">★</div> <div class="vtext">PLAY</div> </div> <div class="game-container"> <!-- 시작 화면 --> <div id="start-screen" class="screen active"> <div class="masthead"> <div class="kicker">Moscow · 1984 · falling forms</div> <h1 class="title"> <span class="ru">EST. 1984</span> <span class="en">TETRIS</span> </h1> <p class="tagline">
+일곱 개의 형태 · 무한한 구성 · 떨어지는 것들에 대한 연구
+</p> </div> <div class="start-grid"> <div class="menu"> <div class="menu-item"> <label>난이도 <span>· LEVEL</span></label> <div class="difficulty-buttons"> <button class="btn btn-difficulty" data-level="beginner"> <span class="lvl-ko">초급</span><span class="lvl-ru">EASY</span> </button> <button class="btn btn-difficulty" data-level="intermediate"> <span class="lvl-ko">중급</span><span class="lvl-ru">NORMAL</span> </button> <button class="btn btn-difficulty" data-level="advanced"> <span class="lvl-ko">고급</span><span class="lvl-ru">HARD</span> </button> </div> </div> <button id="start-btn" class="btn btn-start"> <span>게임 시작</span><span class="arr">▸▸</span> </button> <button id="replay-btn" class="btn btn-replay" style="display:none;">리플레이 보기</button> </div> <div class="high-score-section"> <h2>하이스코어</h2> <div id="high-scores" class="high-scores-list"></div> </div> </div> </div> <!-- 게임 화면 --> <div id="game-screen" class="screen"> <div class="game-layout"> <!-- 왼쪽: 게임 정보 --> <div class="game-info"> <div class="info-panel"> <h3><span>점수</span><span class="ru">SCORE</span></h3> <div id="score" class="score-display">0</div> </div> <div class="info-panel"> <h3><span>레벨</span><span class="ru">LEVEL</span></h3> <div id="level" class="level-display">1</div> </div> <div class="info-panel"> <h3><span>줄</span><span class="ru">LINES</span></h3> <div id="lines" class="lines-display">0</div> </div> </div> <!-- 중앙: 게임 보드 --> <div class="board-container"> <canvas id="game-board"></canvas> <div id="pause-overlay" class="overlay hidden"> <p>일시정지</p> <p class="small">Space를 눌러 계속</p> </div> <div id="game-over-overlay" class="overlay hidden"> <p>게임 오버</p> <p id="final-score" class="score"></p> <button id="restart-btn" class="btn">다시 시작</button> </div> </div> <!-- 오른쪽: 다음 블록 --> <div class="next-pieces"> <div class="info-panel"> <h3><span>다음</span><span class="ru">NEXT</span></h3> <canvas id="next-piece"></canvas> </div> <div class="info-panel controls-panel"> <h3><span>조작법</span><span class="ru">KEYS</span></h3> <div class="controls"> <p> <span class="key">←</span><span class="key">→</span> 이동
+</p> <p><span class="key">↑</span> 회전</p> <p><span class="key">↓</span> 소프트 드롭</p> <p><span class="key">SP</span> 하드 드롭</p> <p><span class="key">P</span> 일시정지</p> </div> </div> </div> </div> <div id="touch-controls" class="touch-controls" aria-hidden="true"> <div class="touch-hint">
+탭 = 회전 · 드래그 = 이동 · 아래로 쓸기 = 하드드롭
+</div> <div class="tpad"> <button class="tbtn" data-act="left" aria-label="왼쪽 이동">◀</button> <button class="tbtn" data-act="rotate" aria-label="회전">↻</button> <button class="tbtn" data-act="right" aria-label="오른쪽 이동">▶</button> <button class="tbtn" data-act="soft" aria-label="소프트 드롭">▼</button> <button class="tbtn tbtn-red" data-act="hard" aria-label="하드 드롭">⤓</button> <button class="tbtn" data-act="pause" aria-label="일시정지">❚❚</button> </div> </div> </div> <!-- 리플레이 화면 --> <div id="replay-screen" class="screen"> <div class="replay-container"> <h2>리플레이</h2> <div class="replay-controls"> <button id="replay-play-btn" class="btn">재생</button> <button id="replay-pause-btn" class="btn">일시정지</button> <button id="replay-back-btn" class="btn">돌아가기</button> </div> <div class="replay-speed"> <span class="speed-label">배속 · SPEED</span> <button class="btn btn-speed" data-speed="0.5">0.5x</button> <button class="btn btn-speed selected" data-speed="1">1x</button> <button class="btn btn-speed" data-speed="2">2x</button> <button class="btn btn-speed" data-speed="4">4x</button> </div> <canvas id="replay-board"></canvas> <div id="replay-score" class="replay-score"></div> </div> </div> </div> </div> <script>
+      /**
+       * 테트로미노 정의 및 회전 로직
+       * 색상은 구성주의(Constructivist) 포스터-잉크 팔레트로 재해석.
+       */
+      const TETROMINOS = {
+        I: {
+          color: "#3aa6a0",
+          shapes: [
+            [
+              [0, 0, 0, 0],
+              [1, 1, 1, 1],
+              [0, 0, 0, 0],
+              [0, 0, 0, 0],
+            ],
+            [
+              [0, 0, 1, 0],
+              [0, 0, 1, 0],
+              [0, 0, 1, 0],
+              [0, 0, 1, 0],
+            ],
+            [
+              [0, 0, 0, 0],
+              [0, 0, 0, 0],
+              [1, 1, 1, 1],
+              [0, 0, 0, 0],
+            ],
+            [
+              [0, 1, 0, 0],
+              [0, 1, 0, 0],
+              [0, 1, 0, 0],
+              [0, 1, 0, 0],
+            ],
+          ],
+        },
+        O: {
+          color: "#e0a526",
+          shapes: [
+            [
+              [1, 1],
+              [1, 1],
+            ],
+            [
+              [1, 1],
+              [1, 1],
+            ],
+            [
+              [1, 1],
+              [1, 1],
+            ],
+            [
+              [1, 1],
+              [1, 1],
+            ],
+          ],
+        },
+        T: {
+          color: "#a05378",
+          shapes: [
+            [
+              [0, 1, 0],
+              [1, 1, 1],
+              [0, 0, 0],
+            ],
+            [
+              [0, 1, 0],
+              [0, 1, 1],
+              [0, 1, 0],
+            ],
+            [
+              [0, 0, 0],
+              [1, 1, 1],
+              [0, 1, 0],
+            ],
+            [
+              [0, 1, 0],
+              [1, 1, 0],
+              [0, 1, 0],
+            ],
+          ],
+        },
+        S: {
+          color: "#7fa650",
+          shapes: [
+            [
+              [0, 1, 1],
+              [1, 1, 0],
+              [0, 0, 0],
+            ],
+            [
+              [0, 1, 0],
+              [0, 1, 1],
+              [0, 0, 1],
+            ],
+            [
+              [0, 0, 0],
+              [0, 1, 1],
+              [1, 1, 0],
+            ],
+            [
+              [1, 0, 0],
+              [1, 1, 0],
+              [0, 1, 0],
+            ],
+          ],
+        },
+        Z: {
+          color: "#ce2a1e",
+          shapes: [
+            [
+              [1, 1, 0],
+              [0, 1, 1],
+              [0, 0, 0],
+            ],
+            [
+              [0, 0, 1],
+              [0, 1, 1],
+              [0, 1, 0],
+            ],
+            [
+              [0, 0, 0],
+              [1, 1, 0],
+              [0, 1, 1],
+            ],
+            [
+              [0, 1, 0],
+              [1, 1, 0],
+              [1, 0, 0],
+            ],
+          ],
+        },
+        J: {
+          color: "#3e6ca6",
+          shapes: [
+            [
+              [1, 0, 0],
+              [1, 1, 1],
+              [0, 0, 0],
+            ],
+            [
+              [0, 1, 1],
+              [0, 1, 0],
+              [0, 1, 0],
+            ],
+            [
+              [0, 0, 0],
+              [1, 1, 1],
+              [0, 0, 1],
+            ],
+            [
+              [0, 1, 0],
+              [0, 1, 0],
+              [1, 1, 0],
+            ],
+          ],
+        },
+        L: {
+          color: "#e0712c",
+          shapes: [
+            [
+              [0, 0, 1],
+              [1, 1, 1],
+              [0, 0, 0],
+            ],
+            [
+              [0, 1, 0],
+              [0, 1, 0],
+              [0, 1, 1],
+            ],
+            [
+              [0, 0, 0],
+              [1, 1, 1],
+              [1, 0, 0],
+            ],
+            [
+              [1, 1, 0],
+              [0, 1, 0],
+              [0, 1, 0],
+            ],
+          ],
+        },
+      };
+
+      const TETROMINO_TYPES = ["I", "O", "T", "S", "Z", "J", "L"];
+
+      function getRandomTetromino() {
+        const randomIndex = Math.floor(Math.random() * TETROMINO_TYPES.length);
+        return TETROMINO_TYPES[randomIndex];
+      }
+
+      /** 7-bag 랜덤 시스템 */
+      class BagRandomizer {
+        constructor() {
+          this.bag = [];
+        }
+        next() {
+          if (this.bag.length === 0) {
+            this.bag = [...TETROMINO_TYPES];
+            for (let i = this.bag.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [this.bag[i], this.bag[j]] = [this.bag[j], this.bag[i]];
+            }
+          }
+          return this.bag.pop();
+        }
+      }
+
+      function getPieceShape(type, rotation) {
+        return TETROMINOS[type].shapes[rotation];
+      }
+      function getPieceColor(type) {
+        return TETROMINOS[type].color;
+      }
+
+      /* 구성주의 타일 렌더 헬퍼 — 평면 색 + 잉크 테두리 + 코너 표식 */
+      const INK = "#161210";
+      function paintTile(ctx, x, y, s, color, accent) {
+        ctx.fillStyle = INK;
+        ctx.fillRect(x, y, s, s);
+        ctx.fillStyle = color;
+        ctx.fillRect(x + 1.5, y + 1.5, s - 3, s - 3);
+        if (accent !== false && s >= 16) {
+          ctx.fillStyle = "rgba(22,18,16,.8)";
+          ctx.fillRect(x + s - 8, y + s - 8, 5, 5);
+        }
+      }
+
+      /**
+       * 게임 보드 관리 및 렌더링
+       */
+      const BOARD_WIDTH = 10;
+      const BOARD_HEIGHT = 20;
+
+      class GameBoard {
+        constructor() {
+          this.grid = [];
+          this.colors = [];
+          this.canvas = null;
+          this.ctx = null;
+          this.blockSize = 30;
+          this.clearingLines = [];
+          this.clearAnimationCallback = null;
+          this.init();
+        }
+
+        init() {
+          this.canvas = document.getElementById("game-board");
+          this.ctx = this.canvas.getContext("2d");
+          this.reset();
+          this.calculateBlockSize();
+          this.resize();
+          window.addEventListener("resize", () => {
+            this.calculateBlockSize();
+            this.resize();
+            this.draw();
+          });
+        }
+
+        reset() {
+          this.grid = Array(BOARD_HEIGHT)
+            .fill(null)
+            .map(() => Array(BOARD_WIDTH).fill(0));
+          this.colors = Array(BOARD_HEIGHT)
+            .fill(null)
+            .map(() => Array(BOARD_WIDTH).fill(null));
+          this.clearingLines = [];
+        }
+
+        calculateBlockSize() {
+          const mobile = window.innerWidth <= 768;
+          // 모바일: 가로는 거의 전체, 세로는 정보 패널 + 터치 패드 공간 확보
+          const reserveH = mobile ? 340 : 100;
+          const reserveW = mobile ? 32 : 360;
+          const maxHeight = window.innerHeight - reserveH;
+          const maxWidth = window.innerWidth - reserveW;
+          const blockSizeByHeight = Math.floor(maxHeight / BOARD_HEIGHT);
+          const blockSizeByWidth = Math.floor(maxWidth / BOARD_WIDTH);
+          this.blockSize = Math.min(blockSizeByHeight, blockSizeByWidth);
+          this.blockSize = Math.max(14, Math.min(40, this.blockSize));
+        }
+
+        resize() {
+          this.canvas.width = BOARD_WIDTH * this.blockSize;
+          this.canvas.height = BOARD_HEIGHT * this.blockSize;
+        }
+
+        draw() {
+          this.ctx.fillStyle = "#161210";
+          this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+          this.drawGrid();
+          for (let row = 0; row < BOARD_HEIGHT; row++) {
+            for (let col = 0; col < BOARD_WIDTH; col++) {
+              if (this.grid[row][col] === 1) {
+                this.drawBlock(col, row, this.colors[row][col]);
+              }
+            }
+          }
+          this.drawClearAnimation();
+        }
+
+        drawGrid() {
+          this.ctx.strokeStyle = "rgba(231,221,198,0.05)";
+          this.ctx.lineWidth = 1;
+          for (let col = 0; col <= BOARD_WIDTH; col++) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(col * this.blockSize, 0);
+            this.ctx.lineTo(col * this.blockSize, this.canvas.height);
+            this.ctx.stroke();
+          }
+          for (let row = 0; row <= BOARD_HEIGHT; row++) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(0, row * this.blockSize);
+            this.ctx.lineTo(this.canvas.width, row * this.blockSize);
+            this.ctx.stroke();
+          }
+        }
+
+        drawBlock(col, row, color) {
+          paintTile(
+            this.ctx,
+            col * this.blockSize,
+            row * this.blockSize,
+            this.blockSize,
+            color,
+          );
+        }
+
+        drawCurrentPiece(piece) {
+          const shape = getPieceShape(piece.type, piece.rotation);
+          const color = getPieceColor(piece.type);
+          for (let row = 0; row < shape.length; row++) {
+            for (let col = 0; col < shape[row].length; col++) {
+              if (shape[row][col] === 1) {
+                const boardRow = piece.row + row;
+                const boardCol = piece.col + col;
+                if (
+                  boardRow >= 0 &&
+                  boardRow < BOARD_HEIGHT &&
+                  boardCol >= 0 &&
+                  boardCol < BOARD_WIDTH
+                ) {
+                  this.drawBlock(boardCol, boardRow, color);
+                }
+              }
+            }
+          }
+        }
+
+        drawGhostPiece(piece) {
+          const ghost = { ...piece };
+          while (this.canMovePiece(ghost, 0, 1)) {
+            ghost.row++;
+          }
+          const shape = getPieceShape(ghost.type, ghost.rotation);
+          for (let row = 0; row < shape.length; row++) {
+            for (let col = 0; col < shape[row].length; col++) {
+              if (shape[row][col] === 1) {
+                const boardRow = ghost.row + row;
+                const boardCol = ghost.col + col;
+                if (
+                  boardRow >= 0 &&
+                  boardRow < BOARD_HEIGHT &&
+                  boardCol >= 0 &&
+                  boardCol < BOARD_WIDTH
+                ) {
+                  const x = boardCol * this.blockSize;
+                  const y = boardRow * this.blockSize;
+                  this.ctx.strokeStyle = "rgba(231,221,198,0.32)";
+                  this.ctx.lineWidth = 2;
+                  this.ctx.strokeRect(
+                    x + 2,
+                    y + 2,
+                    this.blockSize - 4,
+                    this.blockSize - 4,
+                  );
+                }
+              }
+            }
+          }
+        }
+
+        drawClearAnimation() {
+          if (this.clearingLines.length > 0) {
+            for (const row of this.clearingLines) {
+              const y = row * this.blockSize;
+              this.ctx.fillStyle = "rgba(206,42,30,0.6)";
+              this.ctx.fillRect(0, y, this.canvas.width, this.blockSize);
+            }
+          }
+        }
+
+        canMovePiece(piece, deltaX, deltaY) {
+          const shape = getPieceShape(piece.type, piece.rotation);
+          for (let row = 0; row < shape.length; row++) {
+            for (let col = 0; col < shape[row].length; col++) {
+              if (shape[row][col] === 1) {
+                const newBoardRow = piece.row + row + deltaY;
+                const newBoardCol = piece.col + col + deltaX;
+                if (
+                  newBoardCol < 0 ||
+                  newBoardCol >= BOARD_WIDTH ||
+                  newBoardRow >= BOARD_HEIGHT
+                ) {
+                  return false;
+                }
+                if (
+                  newBoardRow >= 0 &&
+                  this.grid[newBoardRow][newBoardCol] === 1
+                ) {
+                  return false;
+                }
+              }
+            }
+          }
+          return true;
+        }
+
+        canRotatePiece(piece, newRotation) {
+          let testPiece = { ...piece, rotation: newRotation };
+          if (this.canMovePiece(testPiece, 0, 0)) {
+            return 0;
+          }
+          const kicks = [-1, 1, -2, 2];
+          for (const kick of kicks) {
+            testPiece = {
+              ...piece,
+              rotation: newRotation,
+              col: piece.col + kick,
+            };
+            if (this.canMovePiece(testPiece, 0, 0)) {
+              return kick;
+            }
+          }
+          return -1;
+        }
+
+        lockPiece(piece) {
+          const shape = getPieceShape(piece.type, piece.rotation);
+          const color = getPieceColor(piece.type);
+          for (let row = 0; row < shape.length; row++) {
+            for (let col = 0; col < shape[row].length; col++) {
+              if (shape[row][col] === 1) {
+                const boardRow = piece.row + row;
+                const boardCol = piece.col + col;
+                if (
+                  boardRow >= 0 &&
+                  boardRow < BOARD_HEIGHT &&
+                  boardCol >= 0 &&
+                  boardCol < BOARD_WIDTH
+                ) {
+                  this.grid[boardRow][boardCol] = 1;
+                  this.colors[boardRow][boardCol] = color;
+                }
+              }
+            }
+          }
+        }
+
+        clearLines() {
+          const clearedRows = [];
+          for (let row = 0; row < BOARD_HEIGHT; row++) {
+            if (this.grid[row].every((cell) => cell === 1)) {
+              clearedRows.push(row);
+            }
+          }
+          if (clearedRows.length > 0) {
+            this.clearingLines = clearedRows;
+            setTimeout(() => {
+              clearedRows.sort((a, b) => b - a);
+              for (const row of clearedRows) {
+                this.grid.splice(row, 1);
+                this.colors.splice(row, 1);
+                this.grid.unshift(Array(BOARD_WIDTH).fill(0));
+                this.colors.unshift(Array(BOARD_WIDTH).fill(null));
+              }
+              this.clearingLines = [];
+              if (this.clearAnimationCallback) {
+                this.clearAnimationCallback(clearedRows.length);
+              }
+              this.draw();
+            }, 300);
+          }
+          return clearedRows.length;
+        }
+
+        isGameOver() {
+          return this.grid[0].some((cell) => cell === 1);
+        }
+      }
+
+      /**
+       * 키보드 입력 처리 (DAS / ARR)
+       */
+      class InputHandler {
+        constructor() {
+          this.keys = {};
+          this.dasDelay = 170;
+          this.arrRate = 50;
+          this.keyTimers = {};
+          this.onMoveLeft = null;
+          this.onMoveRight = null;
+          this.onRotate = null;
+          this.onSoftDrop = null;
+          this.onHardDrop = null;
+          this.onPause = null;
+          this.enabled = true;
+          this.bindEvents();
+        }
+
+        bindEvents() {
+          document.addEventListener("keydown", (e) => this.handleKeyDown(e));
+          document.addEventListener("keyup", (e) => this.handleKeyUp(e));
+        }
+
+        handleKeyDown(e) {
+          if (!this.enabled) return;
+          if (this.keys[e.code]) return;
+          this.keys[e.code] = true;
+          switch (e.code) {
+            case "ArrowLeft":
+              e.preventDefault();
+              if (this.onMoveLeft) this.onMoveLeft();
+              this.startAutoRepeat(e.code, "left");
+              break;
+            case "ArrowRight":
+              e.preventDefault();
+              if (this.onMoveRight) this.onMoveRight();
+              this.startAutoRepeat(e.code, "right");
+              break;
+            case "ArrowUp":
+              e.preventDefault();
+              if (this.onRotate) this.onRotate();
+              break;
+            case "ArrowDown":
+              e.preventDefault();
+              if (this.onSoftDrop) this.onSoftDrop();
+              this.startAutoRepeat(e.code, "down");
+              break;
+            case "Space":
+              e.preventDefault();
+              if (this.onHardDrop) this.onHardDrop();
+              break;
+            case "KeyP":
+            case "Escape":
+              e.preventDefault();
+              if (this.onPause) this.onPause();
+              break;
+          }
+        }
+
+        handleKeyUp(e) {
+          this.keys[e.code] = false;
+          this.stopAutoRepeat(e.code);
+        }
+
+        startAutoRepeat(code, direction) {
+          this.stopAutoRepeat(code);
+          const timer = { das: null, arr: null };
+          timer.das = setTimeout(() => {
+            timer.arr = setInterval(() => {
+              if (this.keys[code] && this.enabled) {
+                switch (direction) {
+                  case "left":
+                    if (this.onMoveLeft) this.onMoveLeft();
+                    break;
+                  case "right":
+                    if (this.onMoveRight) this.onMoveRight();
+                    break;
+                  case "down":
+                    if (this.onSoftDrop) this.onSoftDrop();
+                    break;
+                }
+              }
+            }, this.arrRate);
+          }, this.dasDelay);
+          this.keyTimers[code] = timer;
+        }
+
+        stopAutoRepeat(code) {
+          const timer = this.keyTimers[code];
+          if (timer) {
+            clearTimeout(timer.das);
+            clearInterval(timer.arr);
+            delete this.keyTimers[code];
+          }
+        }
+
+        stopAll() {
+          Object.keys(this.keyTimers).forEach((code) =>
+            this.stopAutoRepeat(code),
+          );
+        }
+
+        setEnabled(enabled) {
+          this.enabled = enabled;
+          if (!enabled) {
+            this.stopAll();
+          }
+        }
+
+        setRepeatRate(das, arr) {
+          this.dasDelay = das;
+          this.arrRate = arr;
+        }
+      }
+
+      /**
+       * 점수 및 레벨 시스템
+       */
+      const DIFFICULTY_SETTINGS = {
+        beginner: {
+          name: "초급",
+          initialSpeed: 1000,
+          speedDecrease: 50,
+          minSpeed: 300,
+          das: 200,
+          arr: 60,
+        },
+        intermediate: {
+          name: "중급",
+          initialSpeed: 700,
+          speedDecrease: 70,
+          minSpeed: 150,
+          das: 170,
+          arr: 50,
+        },
+        advanced: {
+          name: "고급",
+          initialSpeed: 400,
+          speedDecrease: 100,
+          minSpeed: 50,
+          das: 140,
+          arr: 40,
+        },
+      };
+
+      const LINE_SCORES = { 1: 100, 2: 300, 3: 500, 4: 800 };
+      const LINES_PER_LEVEL = 10;
+
+      class ScoreManager {
+        constructor() {
+          this.score = 0;
+          this.level = 1;
+          this.lines = 0;
+          this.difficulty = "intermediate";
+          this.highScores = this.loadHighScores();
+        }
+
+        setDifficulty(difficulty) {
+          this.difficulty = difficulty;
+        }
+
+        addScore(linesCleared) {
+          if (linesCleared === 0) return;
+          const baseScore = LINE_SCORES[linesCleared] || linesCleared * 100;
+          const levelBonus = this.level;
+          this.score += baseScore * levelBonus;
+          this.lines += linesCleared;
+          this.checkLevelUp();
+          this.updateDisplay();
+        }
+
+        checkLevelUp() {
+          const newLevel = Math.floor(this.lines / LINES_PER_LEVEL) + 1;
+          if (newLevel > this.level) {
+            this.level = newLevel;
+            if (typeof Sound !== "undefined" && Sound.playLevelUp) {
+              Sound.playLevelUp();
+            }
+          }
+        }
+
+        getDropSpeed() {
+          const settings = DIFFICULTY_SETTINGS[this.difficulty];
+          const speed =
+            settings.initialSpeed - (this.level - 1) * settings.speedDecrease;
+          return Math.max(speed, settings.minSpeed);
+        }
+
+        getRepeatSettings() {
+          return DIFFICULTY_SETTINGS[this.difficulty];
+        }
+
+        updateDisplay() {
+          const scoreEl = document.getElementById("score");
+          const levelEl = document.getElementById("level");
+          const linesEl = document.getElementById("lines");
+          if (scoreEl) scoreEl.textContent = this.score.toLocaleString();
+          if (levelEl) levelEl.textContent = this.level;
+          if (linesEl) linesEl.textContent = this.lines;
+        }
+
+        reset() {
+          this.score = 0;
+          this.level = 1;
+          this.lines = 0;
+          this.updateDisplay();
+        }
+
+        saveHighScore() {
+          if (this.score === 0) return;
+          const scoreEntry = {
+            score: this.score,
+            level: this.level,
+            lines: this.lines,
+            difficulty: DIFFICULTY_SETTINGS[this.difficulty].name,
+            date: new Date().toLocaleDateString("ko-KR"),
+          };
+          this.highScores.push(scoreEntry);
+          this.highScores.sort((a, b) => b.score - a.score);
+          if (this.highScores.length > 10) {
+            this.highScores = this.highScores.slice(0, 10);
+          }
+          localStorage.setItem(
+            "tetris_high_scores",
+            JSON.stringify(this.highScores),
+          );
+        }
+
+        loadHighScores() {
+          const stored = localStorage.getItem("tetris_high_scores");
+          return stored ? JSON.parse(stored) : [];
+        }
+
+        displayHighScores() {
+          const container = document.getElementById("high-scores");
+          if (!container) return;
+          if (this.highScores.length === 0) {
+            container.innerHTML = "<p>기록이 없습니다 · NO RECORDS</p>";
+            return;
+          }
+          container.innerHTML = this.highScores
+            .map(
+              (entry, index) => `
+          <div class="high-score-item">
+            <span class="rank">${String(index + 1).padStart(2, "0")}</span>
+            <span class="score-value">${entry.score.toLocaleString()}</span>
+            <span class="date">${entry.date}</span>
+          </div>
+        `,
+            )
+            .join("");
+        }
+      }
+
+      /**
+       * 리플레이 시스템
+       */
+      class ReplayRecorder {
+        constructor() {
+          this.events = [];
+          this.recording = false;
+          this.startTime = 0;
+        }
+
+        startRecording() {
+          this.events = [];
+          this.recording = true;
+          this.startTime = Date.now();
+        }
+
+        stopRecording() {
+          this.recording = false;
+        }
+
+        recordSpawn(data) {
+          if (!this.recording) return;
+          this.events.push({
+            type: "spawn",
+            time: Date.now() - this.startTime,
+            data: {
+              type: data.type,
+              row: data.row,
+              col: data.col,
+              rotation: data.rotation,
+            },
+          });
+        }
+
+        recordMove(data) {
+          if (!this.recording) return;
+          this.events.push({
+            type: "move",
+            time: Date.now() - this.startTime,
+            data: { direction: data.direction, count: data.count || 1 },
+          });
+        }
+
+        recordRotate() {
+          if (!this.recording) return;
+          this.events.push({
+            type: "rotate",
+            time: Date.now() - this.startTime,
+          });
+        }
+
+        recordHardDrop() {
+          if (!this.recording) return;
+          this.events.push({
+            type: "hard_drop",
+            time: Date.now() - this.startTime,
+          });
+        }
+
+        recordLock(data) {
+          if (!this.recording) return;
+          this.events.push({
+            type: "lock",
+            time: Date.now() - this.startTime,
+            data: {
+              row: data.row,
+              col: data.col,
+              linesCleared: data.linesCleared || 0,
+              score: data.score || 0,
+            },
+          });
+        }
+
+        recordGameOver() {
+          if (!this.recording) return;
+          this.events.push({
+            type: "game_over",
+            time: Date.now() - this.startTime,
+          });
+        }
+
+        getEvents() {
+          return [...this.events];
+        }
+
+        saveReplay(score) {
+          const replayData = {
+            events: this.events,
+            score: score,
+            date: new Date().toISOString(),
+          };
+          localStorage.setItem(
+            "tetris_last_replay",
+            JSON.stringify(replayData),
+          );
+        }
+
+        loadLastReplay() {
+          const stored = localStorage.getItem("tetris_last_replay");
+          return stored ? JSON.parse(stored) : null;
+        }
+      }
+
+      class ReplayPlayer {
+        constructor(board, onEvent) {
+          this.board = board;
+          this.onEvent = onEvent;
+          this.events = [];
+          this.currentIndex = 0;
+          this.isPlaying = false;
+          this.isPaused = false;
+          this.playbackTimer = null;
+          this.startTime = 0;
+          this.currentPiece = null;
+        }
+
+        load(events) {
+          this.events = events;
+          this.currentIndex = 0;
+          this.currentPiece = null;
+        }
+
+        play() {
+          this.isPlaying = true;
+          this.isPaused = false;
+          this.startTime = Date.now();
+          this.processNextEvent();
+        }
+
+        pause() {
+          this.isPaused = true;
+          if (this.playbackTimer) {
+            clearTimeout(this.playbackTimer);
+            this.playbackTimer = null;
+          }
+        }
+
+        resume() {
+          this.isPaused = false;
+          this.processNextEvent();
+        }
+
+        stop() {
+          this.isPlaying = false;
+          this.isPaused = false;
+          if (this.playbackTimer) {
+            clearTimeout(this.playbackTimer);
+            this.playbackTimer = null;
+          }
+          this.currentIndex = 0;
+          this.currentPiece = null;
+        }
+
+        processNextEvent() {
+          if (!this.isPlaying || this.isPaused) return;
+          if (this.currentIndex >= this.events.length) {
+            this.isPlaying = false;
+            return;
+          }
+          const event = this.events[this.currentIndex];
+          const elapsed = Date.now() - this.startTime;
+          const delay = Math.max(0, event.time - elapsed);
+          this.playbackTimer = setTimeout(() => {
+            this.handleEvent(event);
+            this.currentIndex++;
+            this.processNextEvent();
+          }, delay);
+        }
+
+        handleEvent(event) {
+          if (this.onEvent) {
+            this.onEvent(event);
+          }
+        }
+      }
+
+      /**
+       * 사운드 효과 (Web Audio API)
+       */
+      class SoundManager {
+        constructor() {
+          this.audioContext = null;
+          this.enabled = true;
+          this.initAudioContext();
+        }
+
+        initAudioContext() {
+          try {
+            this.audioContext = new (
+              window.AudioContext || window.webkitAudioContext
+            )();
+            const resumeOnInteraction = () => {
+              if (
+                this.audioContext &&
+                this.audioContext.state === "suspended"
+              ) {
+                this.audioContext.resume();
+              }
+            };
+            document.addEventListener("click", resumeOnInteraction, {
+              once: true,
+            });
+            document.addEventListener("keydown", resumeOnInteraction, {
+              once: true,
+            });
+          } catch (e) {
+            console.warn("Web Audio API를 사용할 수 없습니다:", e);
+            this.enabled = false;
+          }
+        }
+
+        setEnabled(enabled) {
+          this.enabled = enabled;
+        }
+
+        play(config) {
+          if (!this.enabled || !this.audioContext) return;
+          try {
+            const oscillator = this.audioContext.createOscillator();
+            const gainNode = this.audioContext.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(this.audioContext.destination);
+            oscillator.type = config.type || "square";
+            oscillator.frequency.setValueAtTime(
+              config.frequency || 440,
+              this.audioContext.currentTime,
+            );
+            gainNode.gain.setValueAtTime(
+              config.volume || 0.1,
+              this.audioContext.currentTime,
+            );
+            if (config.fadeOut) {
+              gainNode.gain.exponentialRampToValueAtTime(
+                0.001,
+                this.audioContext.currentTime + config.duration,
+              );
+            }
+            oscillator.start(this.audioContext.currentTime);
+            oscillator.stop(this.audioContext.currentTime + config.duration);
+          } catch (e) {
+            console.warn("사운드 재생 실패:", e);
+          }
+        }
+
+        playMove() {
+          this.play({
+            type: "square",
+            frequency: 200,
+            duration: 0.05,
+            volume: 0.05,
+          });
+        }
+        playRotate() {
+          this.play({
+            type: "square",
+            frequency: 300,
+            duration: 0.08,
+            volume: 0.05,
+          });
+        }
+        playHardDrop() {
+          this.play({
+            type: "triangle",
+            frequency: 150,
+            duration: 0.15,
+            volume: 0.1,
+            fadeOut: true,
+          });
+        }
+
+        playLineClear(lines) {
+          const frequencies = [523.25, 659.25, 783.99, 1046.5];
+          const freq = frequencies[Math.min(lines - 1, frequencies.length - 1)];
+          this.play({
+            type: "square",
+            frequency: freq,
+            duration: 0.3,
+            volume: 0.1,
+            fadeOut: true,
+          });
+          if (lines === 4) {
+            setTimeout(() => {
+              this.play({
+                type: "square",
+                frequency: 1318.51,
+                duration: 0.4,
+                volume: 0.1,
+                fadeOut: true,
+              });
+            }, 100);
+          }
+        }
+
+        playLevelUp() {
+          const notes = [523.25, 659.25, 783.99, 1046.5];
+          notes.forEach((freq, index) => {
+            setTimeout(() => {
+              this.play({
+                type: "square",
+                frequency: freq,
+                duration: 0.15,
+                volume: 0.08,
+                fadeOut: true,
+              });
+            }, index * 80);
+          });
+        }
+
+        playGameOver() {
+          const notes = [392.0, 349.23, 329.63, 261.63];
+          notes.forEach((freq, index) => {
+            setTimeout(() => {
+              this.play({
+                type: "square",
+                frequency: freq,
+                duration: 0.3,
+                volume: 0.08,
+                fadeOut: true,
+              });
+            }, index * 150);
+          });
+        }
+      }
+
+      const Sound = new SoundManager();
+
+      /**
+       * 메인 게임 로직
+       */
+      let gameBoard;
+      let scoreManager;
+      let inputHandler;
+      let replayRecorder;
+      let currentPiece;
+      let nextPieceType;
+      let bagRandomizer;
+      let gameLoop;
+      let dropTimer;
+      let gameState = "start";
+      let selectedDifficulty = "intermediate";
+      let replaySpeed = 1;
+
+      function initGame() {
+        gameBoard = new GameBoard();
+        scoreManager = new ScoreManager();
+        inputHandler = new InputHandler();
+        replayRecorder = new ReplayRecorder();
+        bagRandomizer = new BagRandomizer();
+        setupInputHandlers();
+        setupStartScreen();
+        setupTouchControls();
+        setupTouchGestures();
+        scoreManager.displayHighScores();
+        checkForReplay();
+      }
+
+      function setupInputHandlers() {
+        inputHandler.onMoveLeft = () => {
+          if (gameState !== "playing") return;
+          if (gameBoard.canMovePiece(currentPiece, -1, 0)) {
+            currentPiece.col--;
+            gameBoard.draw();
+            gameBoard.drawGhostPiece(currentPiece);
+            gameBoard.drawCurrentPiece(currentPiece);
+            Sound.playMove();
+            replayRecorder.recordMove({ direction: "left" });
+          }
+        };
+
+        inputHandler.onMoveRight = () => {
+          if (gameState !== "playing") return;
+          if (gameBoard.canMovePiece(currentPiece, 1, 0)) {
+            currentPiece.col++;
+            gameBoard.draw();
+            gameBoard.drawGhostPiece(currentPiece);
+            gameBoard.drawCurrentPiece(currentPiece);
+            Sound.playMove();
+            replayRecorder.recordMove({ direction: "right" });
+          }
+        };
+
+        inputHandler.onRotate = () => {
+          if (gameState !== "playing") return;
+          const newRotation = (currentPiece.rotation + 1) % 4;
+          const kick = gameBoard.canRotatePiece(currentPiece, newRotation);
+          if (kick !== -1) {
+            currentPiece.rotation = newRotation;
+            currentPiece.col += kick;
+            gameBoard.draw();
+            gameBoard.drawGhostPiece(currentPiece);
+            gameBoard.drawCurrentPiece(currentPiece);
+            Sound.playRotate();
+            replayRecorder.recordRotate();
+          }
+        };
+
+        inputHandler.onSoftDrop = () => {
+          if (gameState !== "playing") return;
+          if (gameBoard.canMovePiece(currentPiece, 0, 1)) {
+            currentPiece.row++;
+            scoreManager.addScore(0);
+            gameBoard.draw();
+            gameBoard.drawGhostPiece(currentPiece);
+            gameBoard.drawCurrentPiece(currentPiece);
+            replayRecorder.recordMove({ direction: "down" });
+          }
+        };
+
+        inputHandler.onHardDrop = () => {
+          if (gameState === "paused") {
+            resumeGame();
+            return;
+          } // 일시정지 중 Space → 계속
+          if (gameState !== "playing") return;
+          let dropDistance = 0;
+          while (gameBoard.canMovePiece(currentPiece, 0, 1)) {
+            currentPiece.row++;
+            dropDistance++;
+          }
+          scoreManager.addScore(0);
+          scoreManager.score += dropDistance * 2;
+          scoreManager.updateDisplay();
+          Sound.playHardDrop();
+          replayRecorder.recordHardDrop();
+          lockCurrentPiece();
+        };
+
+        inputHandler.onPause = () => {
+          if (gameState === "playing") {
+            pauseGame();
+          } else if (gameState === "paused") {
+            resumeGame();
+          }
+        };
+      }
+
+      function setupStartScreen() {
+        const difficultyButtons = document.querySelectorAll(".btn-difficulty");
+        difficultyButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            difficultyButtons.forEach((b) => b.classList.remove("selected"));
+            btn.classList.add("selected");
+            selectedDifficulty = btn.dataset.level;
+          });
+        });
+        document
+          .querySelector('[data-level="intermediate"]')
+          .classList.add("selected");
+        document
+          .getElementById("start-btn")
+          .addEventListener("click", startGame);
+        document
+          .getElementById("replay-btn")
+          .addEventListener("click", showReplay);
+        document.getElementById("restart-btn").addEventListener("click", () => {
+          document.getElementById("game-over-overlay").classList.add("hidden");
+          showStartScreen();
+        });
+      }
+
+      function showStartScreen() {
+        gameState = "start";
+        document.getElementById("start-screen").classList.add("active");
+        document.getElementById("game-screen").classList.remove("active");
+        document.getElementById("replay-screen").classList.remove("active");
+        scoreManager.displayHighScores();
+        checkForReplay();
+        inputHandler.setEnabled(false);
+      }
+
+      function checkForReplay() {
+        const replayData = replayRecorder.loadLastReplay();
+        const replayBtn = document.getElementById("replay-btn");
+        if (replayData && replayData.events.length > 0) {
+          replayBtn.style.display = "block";
+          replayBtn.textContent = `리플레이 보기 · ${replayData.score.toLocaleString()}점`;
+        } else {
+          replayBtn.style.display = "none";
+        }
+      }
+
+      function startGame() {
+        scoreManager.setDifficulty(selectedDifficulty);
+        scoreManager.reset();
+        gameBoard.reset();
+        const settings = scoreManager.getRepeatSettings();
+        inputHandler.setRepeatRate(settings.das, settings.arr);
+        document.getElementById("start-screen").classList.remove("active");
+        document.getElementById("game-screen").classList.add("active");
+        gameState = "playing";
+        inputHandler.setEnabled(true);
+        replayRecorder.startRecording();
+        spawnNewPiece();
+        startGameLoop();
+      }
+
+      function startGameLoop() {
+        if (gameLoop) cancelAnimationFrame(gameLoop);
+        if (dropTimer) clearInterval(dropTimer);
+        const dropSpeed = scoreManager.getDropSpeed();
+        dropTimer = setInterval(() => {
+          if (gameState !== "playing") return;
+          if (!gameBoard.canMovePiece(currentPiece, 0, 1)) {
+            lockCurrentPiece();
+          } else {
+            currentPiece.row++;
+            gameBoard.draw();
+            gameBoard.drawGhostPiece(currentPiece);
+            gameBoard.drawCurrentPiece(currentPiece);
+          }
+        }, dropSpeed);
+        const render = () => {
+          if (gameState === "playing") {
+            gameBoard.draw();
+            gameBoard.drawGhostPiece(currentPiece);
+            gameBoard.drawCurrentPiece(currentPiece);
+          }
+          gameLoop = requestAnimationFrame(render);
+        };
+        render();
+      }
+
+      function spawnNewPiece() {
+        if (!nextPieceType) {
+          nextPieceType = bagRandomizer.next();
+        }
+        currentPiece = {
+          type: nextPieceType,
+          row: 0,
+          col: Math.floor(BOARD_WIDTH / 2) - 1,
+          rotation: 0,
+        };
+        nextPieceType = bagRandomizer.next();
+        drawNextPiece();
+        replayRecorder.recordSpawn(currentPiece);
+        if (!gameBoard.canMovePiece(currentPiece, 0, 0)) {
+          gameOver();
+        }
+      }
+
+      function drawNextPiece() {
+        const canvas = document.getElementById("next-piece");
+        const ctx = canvas.getContext("2d");
+        const blockSize = 22;
+        canvas.width = 4 * blockSize;
+        canvas.height = 4 * blockSize;
+        ctx.fillStyle = "#161210";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const shape = getPieceShape(nextPieceType, 0);
+        const color = getPieceColor(nextPieceType);
+        const offsetX = (4 - shape[0].length) / 2;
+        const offsetY = (4 - shape.length) / 2;
+        for (let row = 0; row < shape.length; row++) {
+          for (let col = 0; col < shape[row].length; col++) {
+            if (shape[row][col] === 1) {
+              paintTile(
+                ctx,
+                (col + offsetX) * blockSize,
+                (row + offsetY) * blockSize,
+                blockSize,
+                color,
+              );
+            }
+          }
+        }
+      }
+
+      function lockCurrentPiece() {
+        gameBoard.lockPiece(currentPiece);
+        const linesCleared = gameBoard.clearLines();
+        replayRecorder.recordLock({
+          row: currentPiece.row,
+          col: currentPiece.col,
+          linesCleared: linesCleared,
+        });
+        if (linesCleared > 0) {
+          scoreManager.addScore(linesCleared);
+          Sound.playLineClear(linesCleared);
+        }
+        spawnNewPiece();
+        if (dropTimer) {
+          clearInterval(dropTimer);
+          const dropSpeed = scoreManager.getDropSpeed();
+          dropTimer = setInterval(() => {
+            if (gameState !== "playing") return;
+            if (!gameBoard.canMovePiece(currentPiece, 0, 1)) {
+              lockCurrentPiece();
+            } else {
+              currentPiece.row++;
+              gameBoard.draw();
+              gameBoard.drawGhostPiece(currentPiece);
+              gameBoard.drawCurrentPiece(currentPiece);
+            }
+          }, dropSpeed);
+        }
+      }
+
+      function pauseGame() {
+        gameState = "paused";
+        // setEnabled(false)로 막으면 Esc/Space 재개 키까지 막혀버린다.
+        // 입력은 계속 받되 눌린 키의 자동 반복만 정리한다 (이동 콜백은 gameState로 차단됨).
+        inputHandler.stopAll();
+        document.getElementById("pause-overlay").classList.remove("hidden");
+        if (dropTimer) {
+          clearInterval(dropTimer);
+          dropTimer = null;
+        }
+      }
+
+      function resumeGame() {
+        gameState = "playing";
+        inputHandler.setEnabled(true);
+        document.getElementById("pause-overlay").classList.add("hidden");
+        const dropSpeed = scoreManager.getDropSpeed();
+        dropTimer = setInterval(() => {
+          if (gameState !== "playing") return;
+          if (!gameBoard.canMovePiece(currentPiece, 0, 1)) {
+            lockCurrentPiece();
+          } else {
+            currentPiece.row++;
+            gameBoard.draw();
+            gameBoard.drawGhostPiece(currentPiece);
+            gameBoard.drawCurrentPiece(currentPiece);
+          }
+        }, dropSpeed);
+      }
+
+      function gameOver() {
+        gameState = "gameover";
+        inputHandler.setEnabled(false);
+        if (dropTimer) {
+          clearInterval(dropTimer);
+          dropTimer = null;
+        }
+        replayRecorder.recordGameOver();
+        replayRecorder.stopRecording();
+        scoreManager.saveHighScore();
+        replayRecorder.saveReplay(scoreManager.score);
+        Sound.playGameOver();
+        document.getElementById("final-score").textContent =
+          `점수: ${scoreManager.score.toLocaleString()}`;
+        document.getElementById("game-over-overlay").classList.remove("hidden");
+      }
+
+      function showReplay() {
+        const replayData = replayRecorder.loadLastReplay();
+        if (!replayData) return;
+        document.getElementById("start-screen").classList.remove("active");
+        document.getElementById("game-screen").classList.remove("active");
+        document.getElementById("replay-screen").classList.add("active");
+        const replayCanvas = document.getElementById("replay-board");
+        const availableHeight = window.innerHeight - 280;
+        const availableWidth = window.innerWidth - 40;
+        const boardPixelHeight = BOARD_HEIGHT * gameBoard.blockSize;
+        const boardPixelWidth = BOARD_WIDTH * gameBoard.blockSize;
+        let scale = 1;
+        if (boardPixelHeight > availableHeight) {
+          scale = availableHeight / boardPixelHeight;
+        }
+        if (boardPixelWidth * scale > availableWidth) {
+          scale = availableWidth / boardPixelWidth;
+        }
+        replayCanvas.width = boardPixelWidth * scale;
+        replayCanvas.height = boardPixelHeight * scale;
+        document.getElementById("replay-score").textContent =
+          `점수: ${replayData.score.toLocaleString()}`;
+        document
+          .getElementById("replay-back-btn")
+          .addEventListener("click", () => {
+            document.getElementById("replay-screen").classList.remove("active");
+            showStartScreen();
+          });
+        const speedButtons = document.querySelectorAll(".btn-speed");
+        speedButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            speedButtons.forEach((b) => b.classList.remove("selected"));
+            btn.classList.add("selected");
+            replaySpeed = parseFloat(btn.dataset.speed);
+          });
+        });
+        playReplay(replayData.events);
+      }
+
+      function playReplay(events) {
+        const replayCanvas = document.getElementById("replay-board");
+        const ctx = replayCanvas.getContext("2d");
+        const blockSize = replayCanvas.width / BOARD_WIDTH;
+        let grid = Array(BOARD_HEIGHT)
+          .fill(null)
+          .map(() => Array(BOARD_WIDTH).fill(0));
+        let colors = Array(BOARD_HEIGHT)
+          .fill(null)
+          .map(() => Array(BOARD_WIDTH).fill(null));
+        let piece = null;
+
+        const drawReplayFrame = () => {
+          ctx.fillStyle = "#161210";
+          ctx.fillRect(0, 0, replayCanvas.width, replayCanvas.height);
+          ctx.strokeStyle = "rgba(231,221,198,0.05)";
+          ctx.lineWidth = 1;
+          for (let col = 0; col <= BOARD_WIDTH; col++) {
+            ctx.beginPath();
+            ctx.moveTo(col * blockSize, 0);
+            ctx.lineTo(col * blockSize, replayCanvas.height);
+            ctx.stroke();
+          }
+          for (let row = 0; row <= BOARD_HEIGHT; row++) {
+            ctx.beginPath();
+            ctx.moveTo(0, row * blockSize);
+            ctx.lineTo(replayCanvas.width, row * blockSize);
+            ctx.stroke();
+          }
+          for (let row = 0; row < BOARD_HEIGHT; row++) {
+            for (let col = 0; col < BOARD_WIDTH; col++) {
+              if (grid[row][col] === 1) {
+                paintTile(
+                  ctx,
+                  col * blockSize,
+                  row * blockSize,
+                  blockSize,
+                  colors[row][col],
+                );
+              }
+            }
+          }
+          if (piece) {
+            const shape = getPieceShape(piece.type, piece.rotation);
+            const color = getPieceColor(piece.type);
+            for (let row = 0; row < shape.length; row++) {
+              for (let col = 0; col < shape[row].length; col++) {
+                if (shape[row][col] === 1) {
+                  const boardRow = piece.row + row;
+                  const boardCol = piece.col + col;
+                  if (
+                    boardRow >= 0 &&
+                    boardRow < BOARD_HEIGHT &&
+                    boardCol >= 0 &&
+                    boardCol < BOARD_WIDTH
+                  ) {
+                    paintTile(
+                      ctx,
+                      boardCol * blockSize,
+                      boardRow * blockSize,
+                      blockSize,
+                      color,
+                    );
+                  }
+                }
+              }
+            }
+          }
+        };
+
+        let eventIndex = 0;
+        let startTime = Date.now();
+
+        const processEvents = () => {
+          if (eventIndex >= events.length) return;
+          const event = events[eventIndex];
+          const elapsed = Date.now() - startTime;
+          const delay = Math.max(0, (event.time - elapsed) / replaySpeed);
+          setTimeout(() => {
+            switch (event.type) {
+              case "spawn":
+                piece = {
+                  type: event.data.type,
+                  row: event.data.row,
+                  col: event.data.col,
+                  rotation: event.data.rotation,
+                };
+                break;
+              case "move":
+                if (piece) {
+                  switch (event.data.direction) {
+                    case "left":
+                      piece.col -= event.data.count || 1;
+                      break;
+                    case "right":
+                      piece.col += event.data.count || 1;
+                      break;
+                    case "down":
+                      piece.row += event.data.count || 1;
+                      break;
+                  }
+                }
+                break;
+              case "rotate":
+                if (piece) {
+                  piece.rotation = (piece.rotation + 1) % 4;
+                }
+                break;
+              case "hard_drop":
+                if (piece) {
+                  const shape = getPieceShape(piece.type, piece.rotation);
+                  while (true) {
+                    let canDrop = true;
+                    for (let row = 0; row < shape.length; row++) {
+                      for (let col = 0; col < shape[row].length; col++) {
+                        if (shape[row][col] === 1) {
+                          const boardRow = piece.row + row + 1;
+                          const boardCol = piece.col + col;
+                          if (
+                            boardRow >= BOARD_HEIGHT ||
+                            (boardRow >= 0 && grid[boardRow][boardCol] === 1)
+                          ) {
+                            canDrop = false;
+                          }
+                        }
+                      }
+                    }
+                    if (!canDrop) break;
+                    piece.row++;
+                  }
+                  for (let row = 0; row < shape.length; row++) {
+                    for (let col = 0; col < shape[row].length; col++) {
+                      if (shape[row][col] === 1) {
+                        const boardRow = piece.row + row;
+                        const boardCol = piece.col + col;
+                        if (
+                          boardRow >= 0 &&
+                          boardRow < BOARD_HEIGHT &&
+                          boardCol >= 0 &&
+                          boardCol < BOARD_WIDTH
+                        ) {
+                          grid[boardRow][boardCol] = 1;
+                          colors[boardRow][boardCol] = getPieceColor(
+                            piece.type,
+                          );
+                        }
+                      }
+                    }
+                  }
+                  piece = null;
+                }
+                break;
+              case "lock":
+                break;
+              case "game_over":
+                break;
+            }
+            drawReplayFrame();
+            eventIndex++;
+            processEvents();
+          }, delay);
+        };
+
+        processEvents();
+      }
+
+      /* ============================================================
+       터치 조작
+       ============================================================ */
+
+      /** 화면 하단 컨트롤 패드 (꾹 누르면 연속 이동) */
+      function setupTouchControls() {
+        const isTouch =
+          "ontouchstart" in window || navigator.maxTouchPoints > 0;
+        if (isTouch) document.body.classList.add("touch");
+
+        const panel = document.getElementById("touch-controls");
+        if (!panel) return;
+
+        const actions = {
+          left: () => {
+            if (inputHandler.onMoveLeft) inputHandler.onMoveLeft();
+          },
+          right: () => {
+            if (inputHandler.onMoveRight) inputHandler.onMoveRight();
+          },
+          rotate: () => {
+            if (inputHandler.onRotate) inputHandler.onRotate();
+          },
+          soft: () => {
+            if (inputHandler.onSoftDrop) inputHandler.onSoftDrop();
+          },
+          hard: () => {
+            if (inputHandler.onHardDrop) inputHandler.onHardDrop();
+          },
+          pause: () => {
+            if (inputHandler.onPause) inputHandler.onPause();
+          },
+        };
+        const repeatable = { left: true, right: true, soft: true };
+
+        panel.querySelectorAll(".tbtn").forEach((btn) => {
+          const act = btn.dataset.act;
+          let holdTimer = null,
+            repeatTimer = null;
+          const fire = () => {
+            if (actions[act]) actions[act]();
+          };
+          const press = (e) => {
+            e.preventDefault();
+            fire();
+            if (repeatable[act]) {
+              holdTimer = setTimeout(() => {
+                repeatTimer = setInterval(fire, 60);
+              }, 180);
+            }
+          };
+          const release = () => {
+            clearTimeout(holdTimer);
+            clearInterval(repeatTimer);
+            holdTimer = repeatTimer = null;
+          };
+          btn.addEventListener("touchstart", press, { passive: false });
+          btn.addEventListener("touchend", release);
+          btn.addEventListener("touchcancel", release);
+          // 데스크톱에서 테스트할 수 있도록 마우스도 지원
+          btn.addEventListener("mousedown", press);
+          btn.addEventListener("mouseup", release);
+          btn.addEventListener("mouseleave", release);
+        });
+      }
+
+      /** 보드 위 제스처: 탭=회전, 좌우 드래그=이동, 아래로 쓸기=하드드롭 */
+      function setupTouchGestures() {
+        const board = document.getElementById("game-board");
+        const zone = board ? board.parentElement : null; // .board-container
+        if (!zone) return;
+
+        let sx = 0,
+          sy = 0,
+          lastX = 0,
+          lastY = 0,
+          startTime = 0;
+        let startCol = 0,
+          axis = null,
+          moved = false,
+          tracking = false;
+
+        const cell = () =>
+          gameBoard && gameBoard.blockSize ? gameBoard.blockSize : 30;
+
+        zone.addEventListener(
+          "touchstart",
+          (e) => {
+            if (gameState !== "playing" || !currentPiece) return;
+            const t = e.touches[0];
+            sx = lastX = t.clientX;
+            sy = lastY = t.clientY;
+            startTime = Date.now();
+            startCol = currentPiece.col;
+            axis = null;
+            moved = false;
+            tracking = true;
+          },
+          { passive: true },
+        );
+
+        zone.addEventListener(
+          "touchmove",
+          (e) => {
+            if (!tracking || gameState !== "playing" || !currentPiece) return;
+            const t = e.touches[0];
+            lastX = t.clientX;
+            lastY = t.clientY;
+            const dx = lastX - sx;
+            const dy = lastY - sy;
+
+            // 첫 의미있는 이동으로 축 고정 (가로/세로)
+            if (!axis) {
+              if (Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy)) axis = "h";
+              else if (Math.abs(dy) > 12 && Math.abs(dy) >= Math.abs(dx))
+                axis = "v";
+            }
+
+            // 가로 드래그 → 손가락 위치(시작 열 기준 절대값)로 블록을 따라 이동
+            if (axis === "h") {
+              moved = true;
+              const targetCol = startCol + Math.round(dx / cell());
+              let guard = 0;
+              while (currentPiece.col < targetCol && guard++ < 16) {
+                const before = currentPiece.col;
+                inputHandler.onMoveRight();
+                if (currentPiece.col === before) break; // 벽/블록에 막힘
+              }
+              while (currentPiece.col > targetCol && guard++ < 16) {
+                const before = currentPiece.col;
+                inputHandler.onMoveLeft();
+                if (currentPiece.col === before) break;
+              }
+            }
+          },
+          { passive: true },
+        );
+
+        const end = () => {
+          if (!tracking) return;
+          tracking = false;
+          if (gameState !== "playing" || !currentPiece) return;
+
+          const dx = lastX - sx;
+          const dy = lastY - sy;
+          const dt = Date.now() - startTime;
+
+          if (axis === "h") return; // 이미 이동으로 처리됨
+
+          // 짧은 탭 → 회전
+          if (!moved && Math.abs(dx) < 12 && Math.abs(dy) < 12 && dt < 350) {
+            if (inputHandler.onRotate) inputHandler.onRotate();
+            return;
+          }
+          // 아래로 쓸기 → 하드 드롭
+          if (dy > 30 && dy > Math.abs(dx) * 1.4) {
+            if (inputHandler.onHardDrop) inputHandler.onHardDrop();
+          }
+        };
+
+        zone.addEventListener("touchend", end);
+        zone.addEventListener("touchcancel", end);
+      }
+
+      window.addEventListener("load", initGame);
+    </script> </body> </html>
