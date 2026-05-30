@@ -49,22 +49,6 @@ tap any die to lock it in · tap a yellow cell to score
           desc: "sum of 6s",
         },
         {
-          id: "pair",
-          name: "Pair",
-          section: "combo",
-          example: [4, 4, 1, 5, 2],
-          desc: "sum of pair",
-          highlight: [0, 1],
-        },
-        {
-          id: "two_pair",
-          name: "Two Pair",
-          section: "combo",
-          example: [3, 3, 5, 5, 1],
-          desc: "sum of both pairs",
-          highlight: [0, 1, 2, 3],
-        },
-        {
           id: "full_house",
           name: "Full House",
           section: "combo",
@@ -77,16 +61,16 @@ tap any die to lock it in · tap a yellow cell to score
           name: "Big Straight",
           section: "combo",
           example: [2, 3, 4, 5, 6],
-          desc: "30 pts",
+          desc: "5 in a row · 30 pts",
           highlight: [0, 1, 2, 3, 4],
         },
         {
           id: "small_straight",
           name: "Small Straight",
           section: "combo",
-          example: [1, 2, 3, 4, 5],
-          desc: "30 pts",
-          highlight: [0, 1, 2, 3, 4],
+          example: [1, 2, 3, 4, 6],
+          desc: "4 in a row · 15 pts",
+          highlight: [0, 1, 2, 3],
         },
         {
           id: "yacht",
@@ -168,20 +152,6 @@ tap any die to lock it in · tap a yellow cell to score
           case "sixes":
             return counts[6] * 6;
 
-          case "pair": {
-            for (let v = 6; v >= 1; v--) if (counts[v] >= 2) return v * 2;
-            return 0;
-          }
-
-          case "two_pair": {
-            const pairs = [];
-            for (let v = 6; v >= 1; v--) {
-              if (counts[v] >= 2) pairs.push(v);
-              if (pairs.length === 2) break;
-            }
-            return pairs.length >= 2 ? pairs[0] * 2 + pairs[1] * 2 : 0;
-          }
-
           case "full_house": {
             const vals = Object.values(counts);
             if (vals.includes(3) && vals.includes(2)) return total;
@@ -189,13 +159,18 @@ tap any die to lock it in · tap a yellow cell to score
           }
 
           case "big_straight": {
-            const s = [...dice].sort((a, b) => a - b);
-            return s.join(",") === "2,3,4,5,6" ? 30 : 0;
+            // 연속된 숫자 5개 (1-2-3-4-5 또는 2-3-4-5-6)
+            const u = [...new Set(dice)].sort((a, b) => a - b).join(",");
+            return u === "1,2,3,4,5" || u === "2,3,4,5,6" ? 30 : 0;
           }
 
           case "small_straight": {
-            const s = [...dice].sort((a, b) => a - b);
-            return s.join(",") === "1,2,3,4,5" ? 30 : 0;
+            // 연속된 숫자 4개 이상 포함 (1-2-3-4 / 2-3-4-5 / 3-4-5-6)
+            const u = new Set(dice);
+            const hasRun = (run) => run.every((v) => u.has(v));
+            return hasRun([1, 2, 3, 4]) || hasRun([2, 3, 4, 5]) || hasRun([3, 4, 5, 6])
+              ? 15
+              : 0;
           }
 
           case "yacht":
@@ -211,6 +186,23 @@ tap any die to lock it in · tap a yellow cell to score
           default:
             return 0;
         }
+      }
+
+      /* ── Count-section bonus (sum of ones..sixes ≥ 63 → +35) ── */
+      const COUNT_IDS = ["ones", "twos", "threes", "fours", "fives", "sixes"];
+      const COUNT_BONUS_THRESHOLD = 63;
+      const COUNT_BONUS = 35;
+
+      function getCountSum(p) {
+        return COUNT_IDS.reduce((s, id) => s + (p.scores[id] || 0), 0);
+      }
+      function getBonus(p) {
+        return getCountSum(p) >= COUNT_BONUS_THRESHOLD ? COUNT_BONUS : 0;
+      }
+      function getTotal(p) {
+        return (
+          Object.values(p.scores).reduce((a, b) => a + b, 0) + getBonus(p)
+        );
       }
 
       /* ── Actions ── */
@@ -298,7 +290,7 @@ tap any die to lock it in · tap a yellow cell to score
         const sorted = state.players
           .map((p) => ({
             name: p.name,
-            total: Object.values(p.scores).reduce((a, b) => a + b, 0),
+            total: getTotal(p),
           }))
           .sort((a, b) => b.total - a.total);
 
@@ -416,6 +408,7 @@ tap any die to lock it in · tap a yellow cell to score
 
         CATEGORIES.forEach((cat) => {
           if (cat.section !== lastSection) {
+            if (lastSection === "count") appendBonusRow(body);
             const sep = document.createElement("tr");
             const label = cat.section === "count" ? "Count" : "Combinations";
             const sepTd = document.createElement("td");
@@ -499,12 +492,46 @@ tap any die to lock it in · tap a yellow cell to score
           td.style.fontWeight = "700";
           td.style.color = "#e94560";
           td.style.textAlign = "center";
-          td.textContent = Object.keys(p.scores).length
-            ? Object.values(p.scores).reduce((a, b) => a + b, 0)
-            : "—";
+          td.textContent = Object.keys(p.scores).length ? getTotal(p) : "—";
           totalTr.appendChild(td);
         });
         body.appendChild(totalTr);
+      }
+
+      /* Bonus row (shown between Count and Combinations sections) */
+      function appendBonusRow(body) {
+        const tr = document.createElement("tr");
+        const nameTd = document.createElement("td");
+        const div = document.createElement("div");
+        div.className = "cat-cell";
+        const n = document.createElement("span");
+        n.className = "cat-name";
+        n.textContent = "Bonus";
+        const d = document.createElement("span");
+        d.className = "cat-score-desc";
+        d.textContent = "count ≥ 63 → +35";
+        div.appendChild(n);
+        div.appendChild(d);
+        nameTd.appendChild(div);
+        tr.appendChild(nameTd);
+
+        state.players.forEach((p) => {
+          const td = document.createElement("td");
+          td.className = "score-col";
+          td.style.textAlign = "center";
+          const bonus = getBonus(p);
+          if (bonus) {
+            td.classList.add("scored");
+            td.style.color = "#e94560";
+            td.style.fontWeight = "700";
+            td.textContent = "+35";
+          } else {
+            td.style.color = "#888";
+            td.textContent = getCountSum(p) + "/63";
+          }
+          tr.appendChild(td);
+        });
+        body.appendChild(tr);
       }
 
       function renderAll() {
